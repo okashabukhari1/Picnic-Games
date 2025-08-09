@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Picnic Games</title>
+    <link rel="icon" type="image/png" href="Images/PicnicGames-Logo.png">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            /* Primary Colors - Blue Theme */
+            --primary: #1e88e5;
+            /* Primary blue */
+            --primary-light: #64b5f6;
+            /* Lighter shade for hover states */
+            --primary-dark: #1565c0;
+            /* Darker shade for active states */
+            --primary-bg-subtle: #e3f2fd;
+        }
+
+        .navbar {
+            padding: 0.8rem 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: var(--primary-dark);
+            transform: scale(1.02);
+        }
+
+        .navbar-brand img {
+            height: 80px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: rotate(-5deg);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--gray-700);
+            margin: 0 0.3rem;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            color: var(--primary);
+            background-color: var(--primary-bg-subtle);
+        }
+
+        .nav-link:hover::before,
+        .nav-link:focus::before {
+            width: 70%;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+            background-color: var(--primary-bg-subtle);
+        }
+
+        .nav-link.active::before {
+            width: 70%;
+            background: var(--primary);
+        }
+
+        .contact-hero {
+            background: linear-gradient(rgba(5, 167, 242, 0.7), rgb(60, 154, 241));
+            color: white;
+            padding: 120px 0 60px;
+            margin-top: -76px;
+            margin-bottom: 50px;
+        }
+
+        .contact-info-card {
+            border: none;
+            border-radius: var(--border-radius-lg);
+            padding: 30px;
+            height: 100%;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            background-color: white;
+            border: 1px solid var(--gray-200);
+        }
+
+        .contact-info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: rgba(13, 110, 253, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary);
+            font-size: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info-card:hover .contact-icon {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        }
+
+        .btn-primary {
+            padding: 12px 30px;
+            font-weight: 600;
+        }
+
+        .map-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            min-height: 300px;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            color: #333;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .alert {
+            z-index: 100;
+            position: absolute;
+            top: 30px;
+            text-align: center;
+            background-color: #ffffff;
+            border: 1px solid red;
+            padding: 10px;
+            display: none;
+            border-radius: 10px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .loading-page {
+            position: absolute;
+            background: linear-gradient(to right, #ffffff, #c1eaf5, #cbefff);
+            z-index: 1000;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        #svg {
+            height: 150px;
+            width: 150px;
+            stroke: black;
+            fill-opacity: 0;
+            stroke-width: 6px;
+            stroke-dasharray: 4500;
+            animation: draw 8s ease;
+        }
+
+        body.loading>*:not(.loading-page) {
+            display: none;
+        }
+
+        body.reveal>*:not(.loading-page) {
+            animation: fadeInSite 1s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInSite {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes draw {
+            0% {
+                stroke-dashoffset: 4500;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #svg {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body class="loading">
+    <!-- Loading content -->
+    <div class="loading-page">
+        <div class="picnic">
+            <!-- P svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Pro v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M160 128C160 110.3 174.3 96 192 96L320 96C408.4 96 480 167.6 480 256C480 344.4 408.4 416 320 416L224 416L224 512C224 529.7 209.7 544 192 544C174.3 544 160 529.7 160 512L160 128zM224 352L320 352C373 352 416 309 416 256C416 203 373 160 320 160L224 160L224 352z" />
+            </svg>
+            <!-- I svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M192 96C174.3 96 160 110.3 160 128C160 145.7 174.3 160 192 160L288 160L288 480L192 480C174.3 480 160 494.3 160 512C160 529.7 174.3 544 192 544L448 544C465.7 544 480 529.7 480 512C480 494.3 465.7 480 448 480L352 480L352 160L448 160C465.7 160 480 145.7 480 128C480 110.3 465.7 96 448 96L192 96z" />
+            </svg>
+            <!-- C svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M457.1 206.9C394.6 144.4 301.3 144.4 238.8 206.9C176.3 269.4 176.3 370.7 238.8 433.2C301.3 495.7 394.6 495.7 457.1 433.2C469.6 420.7 489.9 420.7 502.4 433.2C514.9 445.7 514.9 466 502.4 478.5C414.9 566 281.1 566 193.6 478.5C106.1 391 106.1 249.2 193.6 161.7C281.1 74.2 414.9 74.2 502.4 161.7C514.9 174.2 514.9 194.5 502.4 207C489.9 219.5 469.6 219.5 457.1 207z" />
+            </svg>
+            <!-- N svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M149.1 97.9C161.8 93.3 176 97.2 184.6 107.5L448 423.6L448 128C448 110.3 462.3 96 480 96C497.7 96 512 110.3 512 128L512 512C512 525.5 503.6 537.5 490.9 542.1C478.2 546.7 464 542.8 455.4 532.5L192 216.4L192 512C192 529.7 177.7 544 160 544C142.3 544 128 529.7 128 512L128 128C128 114.5 136.4 102.5 149.1 97.9z" />
+            </svg>
+            <!-- I svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M192 96C174.3 96 160 110.3 160 128C160 145.7 174.3 160 192 160L288 160L288 480L192 480C174.3 480 160 494.3 160 512C160 529.7 174.3 544 192 544L448 544C465.7 544 480 529.7 480 512C480 494.3 465.7 480 448 480L352 480L352 160L448 160C465.7 160 480 145.7 480 128C480 110.3 465.7 96 448 96L192 96z" />
+            </svg>
+            <!-- C svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M457.1 206.9C394.6 144.4 301.3 144.4 238.8 206.9C176.3 269.4 176.3 370.7 238.8 433.2C301.3 495.7 394.6 495.7 457.1 433.2C469.6 420.7 489.9 420.7 502.4 433.2C514.9 445.7 514.9 466 502.4 478.5C414.9 566 281.1 566 193.6 478.5C106.1 391 106.1 249.2 193.6 161.7C281.1 74.2 414.9 74.2 502.4 161.7C514.9 174.2 514.9 194.5 502.4 207C489.9 219.5 469.6 219.5 457.1 207z" />
+            </svg>
+        </div>
+        <div class="games">
+            <!-- G svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M320 160C231.6 160 160 231.6 160 320C160 408.4 231.6 480 320 480C397.4 480 462 425 476.8 352L352 352C334.3 352 320 337.7 320 320C320 302.3 334.3 288 352 288L496 288C521.8 288 545.6 309.4 543.2 338.6C533.7 453.6 437.4 544 320 544C196.3 544 96 443.7 96 320C96 196.3 196.3 96 320 96C377.4 96 429.7 117.6 469.3 153C482.5 164.8 483.6 185 471.8 198.2C460 211.4 439.8 212.5 426.6 200.7C398.3 175.4 361 160 320 160z" />
+            </svg>
+            <!-- A svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M349.5 115.7C344.6 103.8 332.9 96 320 96C307.1 96 295.4 103.8 290.5 115.7C197.2 339.7 143.8 467.7 130.5 499.7C123.7 516 131.4 534.7 147.7 541.5C164 548.3 182.7 540.6 189.5 524.3L221.3 448L418.6 448L450.4 524.3C457.2 540.6 475.9 548.3 492.2 541.5C508.5 534.7 516.2 516 509.4 499.7C496.1 467.7 442.7 339.7 349.4 115.7zM392 384L248 384L320 211.2L392 384z" />
+            </svg>
+            <!-- M svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M118.7 97.4C132.2 93.3 146.8 98.5 154.6 110.3L320 358.3L485.4 110.3C493.2 98.6 507.8 93.3 521.3 97.4C534.8 101.5 544 113.9 544 128L544 512C544 529.7 529.7 544 512 544C494.3 544 480 529.7 480 512L480 233.7L346.6 433.8C340.7 442.7 330.7 448 320 448C309.3 448 299.3 442.7 293.4 433.8L160 233.7L160 512C160 529.7 145.7 544 128 544C110.3 544 96 529.7 96 512L96 128C96 113.9 105.2 101.5 118.7 97.4z" />
+            </svg>
+            <!-- E svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M192 96C174.3 96 160 110.3 160 128L160 512C160 529.7 174.3 544 192 544L448 544C465.7 544 480 529.7 480 512C480 494.3 465.7 480 448 480L224 480L224 352L384 352C401.7 352 416 337.7 416 320C416 302.3 401.7 288 384 288L224 288L224 160L448 160C465.7 160 480 145.7 480 128C480 110.3 465.7 96 448 96L192 96z" />
+            </svg>
+            <!-- S svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M160 221.5C160 152.2 216.2 96 285.5 96L432 96C449.7 96 464 110.3 464 128C464 145.7 449.7 160 432 160L285.5 160C251.5 160 224 187.5 224 221.5C224 252.5 247.1 278.7 277.9 282.5L370.1 294C432.9 301.9 480 355.2 480 418.5C480 487.8 423.8 544 354.5 544L208 544C190.3 544 176 529.7 176 512C176 494.3 190.3 480 208 480L354.5 480C388.5 480 416 452.5 416 418.5C416 387.5 392.9 361.3 362.1 357.5L269.9 346C207.1 338.1 160 284.8 160 221.5z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="z-index: 10;">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="Images/PicnicGames-Logo.png" alt="Picnic Games Logo" height="80px">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" href="games.html">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" href="itinerary.html">Itinerary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold fs-6" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container d-flex justify-content-center align-items-center fixed-top">
+        <div class="alert" id="alert" style="z-index: 100;">Thank you for your message! We will get back to you soon.
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="contact-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 mb-4 mt-4 fw-bold">Get In Touch</h1>
+                    <p class="lead">We'd love to hear from you! Send us a message or visit our office.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contact Info -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="contact-info-card text-center">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3 class="h5">Our Location</h3>
+                        <p class="text-muted mb-0">Jameel Jalabi, Road, Block-B Block B <br> North Nazimabad Town,
+                            Karachi,
+                            74700, Pakistan</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="contact-info-card text-center">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3 class="h5">Phone Number</h3>
+                        <p class="text-muted mb-0">(021) 36630103<br>Mon - Fri, 9:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="contact-info-card text-center">
+                        <div class="contact-icon">
+                            <i class="far fa-envelope"></i>
+                        </div>
+                        <h3 class="h5">Email Address</h3>
+                        <p class="text-muted mb-0">info@picnicgames.com<br>support@picnicgames.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form & Map -->
+    <section class="py-5 bg-light overflow-hidden">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <h2 class="h4 mb-4">Send Us a Message</h2>
+                            <form id="contactForm" novalidate>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="name" class="form-label">Your Name *</label>
+                                        <input type="text" class="form-control" id="name" required>
+                                        <div class="invalid-feedback">Please enter your name.</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label">Email Address *</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="subject" class="form-label">Subject</label>
+                                        <input type="text" class="form-control" id="subject" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="message" class="form-label">Your Message *</label>
+                                        <textarea class="form-control" id="message" rows="5" required></textarea>
+                                        <div class="invalid-feedback">Please enter your message.</div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="privacyPolicy" required>
+                                            <label class="form-check-label small" for="privacyPolicy">
+                                                I agree to the <a href="#">Privacy Policy</a> and <a href="#">Terms of
+                                                    Service</a> *
+                                            </label>
+                                            <div class="invalid-feedback">You must agree before submitting.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="far fa-paper-plane me-2"></i>Send Message
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="map-container d-flex justify-content-center align-items-center">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2558.416212219639!2d67.03395160139826!3d24.927064894908494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f90157042d3%3A0x93d609e8bec9a880!2sAptech%20Computer%20Education%20North%20Nazimabad%20Center!5e0!3m2!1sen!2s!4v1753177796866!5m2!1sen!2s"
+                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="text-muted">Find answers to common questions about our picnic games</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item border-0 mb-3 shadow-sm">
+                            <h3 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" style="background-color: white;" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                    How do I organize a picnic with your games?
+                                </button>
+                            </h3>
+                            <div id="collapseOne" class="accordion-collapse collapse show"
+                                data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Organizing a picnic with our games is easy! Simply browse our <a
+                                        href="games.html">games section</a> to find activities you like,
+                                    check out our <a href="itinerary.html">itinerary suggestions</a> for planning help,
+                                    and gather the necessary materials.
+                                    Most of our games require minimal equipment and can be set up in any outdoor space.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 mb-3 shadow-sm">
+                            <h3 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button bg-white collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                    Are these games suitable for all ages?
+                                </button>
+                            </h3>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes! We offer games suitable for all age groups. Each game is clearly labeled with
+                                    recommended age ranges and difficulty levels.
+                                    We have simple games for young children, engaging activities for teens, and fun
+                                    challenges that adults will enjoy too.
+                                    Many of our games can also be easily adapted for different age groups.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 mb-3 shadow-sm">
+                            <h3 class="accordion-header" id="headingThree">
+                                <button class="accordion-button bg-white collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                    Do you provide physical game materials?
+                                </button>
+                            </h3>
+                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Currently, we provide digital resources including printable game instructions,
+                                    scorecards, and material lists.
+                                    Our games are designed to be played with common household items or easily obtainable
+                                    materials.
+                                    We're working on offering physical game kits in the future!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 shadow-sm">
+                            <h3 class="accordion-header" id="headingFour">
+                                <button class="accordion-button bg-white collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseFour">
+                                    Can I suggest a new game to add to your collection?
+                                </button>
+                            </h3>
+                            <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Absolutely! We love hearing new game ideas from our community.
+                                    You can submit your game suggestions through our <a href="#contact">contact
+                                        form</a>.
+                                    Please include the game name, instructions, materials needed, and any other relevant
+                                    details.
+                                    If we add your game to our collection, we'll give you credit!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 style="color: white;">Picnic Games</h5>
+                    <p style="color: white;">Making family time more fun and memorable with our collection of engaging
+                        games and activities.</p>
+                    <div class="social-links mt-3">
+                        <a href="https://web.facebook.com/" class="text-decoration-none"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/" class="text-decoration-none"><i class="fab fa-x"></i></a>
+                        <a href="https://www.instagram.com/" class="text-decoration-none"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/" class="text-decoration-none"><i
+                                class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 mb-4 mb-lg-0">
+                    <h6 style="color: white;">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="games.html" class="text-white text-decoration-none">Games</a></li>
+                        <li class="mb-2"><a href="itinerary.html" class="text-white text-decoration-none">Itinerary</a>
+                        </li>
+                        <li class="mb-2"><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <h6 style="color: white;">Newsletter</h6>
+                    <p style="color: white;">Subscribe to get updates on new games and picnic ideas.</p>
+                    <form class="mb-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control bg-dark text-white border-secondary"
+                                placeholder="Your email">
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                    <p class="small mb-0" style="color: white;">We'll never share your email with anyone else.</p>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0" style="color: white;">&copy; 2025 Picnic Games. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        <a href="#" class="text-white text-decoration-none">Privacy Policy</a> |
+                        <a href="#" class="text-white text-decoration-none">Terms of Service</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"
+        integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Custom JS -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            gsap.fromTo(
+                ".loading-page",
+                { opacity: 1 },
+                {
+                    opacity: 0,
+                    duration: 1.5,
+                    delay: 3.5,
+                    onComplete: () => {
+                        document.querySelector(".loading-page").style.display = "none"; // remove loader
+                        document.body.classList.remove("loading");
+                        document.body.classList.add("reveal");
+
+                        // re-init AOS after loader ends
+                        AOS.init({
+                            duration: 800,
+                            easing: 'ease-in-out',
+                            once: true,
+                            mirror: false
+                        });
+                    }
+                }
+            );
+
+            const contactForm = document.getElementById('contactForm');
+            const nameInput = document.getElementById('name');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (event) {
+                    const nameValue = nameInput.value.trim();
+                    const nameIsValid = /^[A-Za-z\s]+$/.test(nameValue);
+
+                    nameInput.classList.remove('is-valid', 'is-invalid');
+
+                    if (!nameIsValid) {
+                        nameInput.classList.add('is-invalid');
+                        nameInput.nextElementSibling.textContent = "Name must contain only letters.";
+                    } else {
+                        nameInput.classList.add('is-valid');
+                    }
+
+                    if (!contactForm.checkValidity() || !nameIsValid) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        contactForm.classList.add('was-validated');
+                    } else {
+                        event.preventDefault(); // simulate successful submission
+                        document.getElementById("alert").style.display = "inline";
+                        setTimeout(() => {
+                            document.getElementById("alert").style.display = "none";
+                        }, 2000); // 2 seconds
+
+
+
+                        // Clear form inputs and validation styles
+                        contactForm.reset();
+                        contactForm.classList.remove('was-validated');
+
+                        const inputs = contactForm.querySelectorAll('.form-control, .form-check-input, textarea');
+                        inputs.forEach(input => {
+                            input.classList.remove('is-valid', 'is-invalid');
+                        });
+                    }
+                }, false);
+            }
+
+            // Real-time validation for name input
+            nameInput.addEventListener('input', function () {
+                const nameValue = this.value.trim();
+                const nameIsValid = /^[A-Za-z\s]+$/.test(nameValue);
+                this.classList.remove('is-valid', 'is-invalid');
+                if (nameValue.length > 0) {
+                    this.classList.add(nameIsValid ? 'is-valid' : 'is-invalid');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

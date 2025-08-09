@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picnic Itinerary - Picnic Games</title>
+    <link rel="icon" type="image/png" href="Images/PicnicGames-Logo.png">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Primary Colors - Blue Theme */
+            --primary: #1e88e5;
+            /* Primary blue */
+            --primary-light: #64b5f6;
+            /* Lighter shade for hover states */
+            --primary-dark: #1565c0;
+            /* Darker shade for active states */
+            --primary-bg-subtle: #e3f2fd;
+        }
+
+        .navbar {
+            padding: 0.8rem 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: var(--primary-dark);
+            transform: scale(1.02);
+        }
+
+        .navbar-brand img {
+            height: 80px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: rotate(-5deg);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--gray-700);
+            margin: 0 0.3rem;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            color: var(--primary);
+            background-color: var(--primary-bg-subtle);
+        }
+
+        .nav-link:hover::before,
+        .nav-link:focus::before {
+            width: 70%;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+            background-color: var(--primary-bg-subtle);
+        }
+
+        .nav-link.active::before {
+            width: 70%;
+            background: var(--primary);
+        }
+
+        .itinerary-hero {
+            background: linear-gradient(rgba(5, 167, 242, 0.7), rgb(60, 154, 241));
+            color: white;
+            padding: 120px 0 60px;
+            margin-top: -76px;
+            margin-bottom: 50px;
+        }
+
+        .itinerary-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .itinerary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .itinerary-image {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .itinerary-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            color: #333;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .loading-page {
+            position: absolute;
+            background: linear-gradient(to right, #ffffff, #c1eaf5, #cbefff);
+            z-index: 1000;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        #svg {
+            height: 150px;
+            width: 150px;
+            stroke: black;
+            fill-opacity: 0;
+            stroke-width: 6px;
+            stroke-dasharray: 4500;
+            animation: draw 8s ease;
+        }
+
+        body.loading>*:not(.loading-page) {
+            display: none;
+        }
+
+        body.reveal>*:not(.loading-page) {
+            animation: fadeInSite 1s ease forwards;
+            opacity: 0;
+        }
+
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.3) !important;
+        }
+
+
+        @keyframes fadeInSite {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes draw {
+            0% {
+                stroke-dashoffset: 4500;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #svg {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body class="loading">
+    <!-- Loading content -->
+    <div class="loading-page">
+        <div class="picnic">
+            <!-- P svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Pro v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M160 128C160 110.3 174.3 96 192 96L320 96C408.4 96 480 167.6 480 256C480 344.4 408.4 416 320 416L224 416L224 512C224 529.7 209.7 544 192 544C174.3 544 160 529.7 160 512L160 128zM224 352L320 352C373 352 416 309 416 256C416 203 373 160 320 160L224 160L224 352z" />
+            </svg>
+            <!-- I svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M192 96C174.3 96 160 110.3 160 128C160 145.7 174.3 160 192 160L288 160L288 480L192 480C174.3 480 160 494.3 160 512C160 529.7 174.3 544 192 544L448 544C465.7 544 480 529.7 480 512C480 494.3 465.7 480 448 480L352 480L352 160L448 160C465.7 160 480 145.7 480 128C480 110.3 465.7 96 448 96L192 96z" />
+            </svg>
+            <!-- C svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M457.1 206.9C394.6 144.4 301.3 144.4 238.8 206.9C176.3 269.4 176.3 370.7 238.8 433.2C301.3 495.7 394.6 495.7 457.1 433.2C469.6 420.7 489.9 420.7 502.4 433.2C514.9 445.7 514.9 466 502.4 478.5C414.9 566 281.1 566 193.6 478.5C106.1 391 106.1 249.2 193.6 161.7C281.1 74.2 414.9 74.2 502.4 161.7C514.9 174.2 514.9 194.5 502.4 207C489.9 219.5 469.6 219.5 457.1 207z" />
+            </svg>
+            <!-- N svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M149.1 97.9C161.8 93.3 176 97.2 184.6 107.5L448 423.6L448 128C448 110.3 462.3 96 480 96C497.7 96 512 110.3 512 128L512 512C512 525.5 503.6 537.5 490.9 542.1C478.2 546.7 464 542.8 455.4 532.5L192 216.4L192 512C192 529.7 177.7 544 160 544C142.3 544 128 529.7 128 512L128 128C128 114.5 136.4 102.5 149.1 97.9z" />
+            </svg>
+            <!-- I svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M192 96C174.3 96 160 110.3 160 128C160 145.7 174.3 160 192 160L288 160L288 480L192 480C174.3 480 160 494.3 160 512C160 529.7 174.3 544 192 544L448 544C465.7 544 480 529.7 480 512C480 494.3 465.7 480 448 480L352 480L352 160L448 160C465.7 160 480 145.7 480 128C480 110.3 465.7 96 448 96L192 96z" />
+            </svg>
+            <!-- C svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M457.1 206.9C394.6 144.4 301.3 144.4 238.8 206.9C176.3 269.4 176.3 370.7 238.8 433.2C301.3 495.7 394.6 495.7 457.1 433.2C469.6 420.7 489.9 420.7 502.4 433.2C514.9 445.7 514.9 466 502.4 478.5C414.9 566 281.1 566 193.6 478.5C106.1 391 106.1 249.2 193.6 161.7C281.1 74.2 414.9 74.2 502.4 161.7C514.9 174.2 514.9 194.5 502.4 207C489.9 219.5 469.6 219.5 457.1 207z" />
+            </svg>
+        </div>
+        <div class="games">
+            <!-- G svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M320 160C231.6 160 160 231.6 160 320C160 408.4 231.6 480 320 480C397.4 480 462 425 476.8 352L352 352C334.3 352 320 337.7 320 320C320 302.3 334.3 288 352 288L496 288C521.8 288 545.6 309.4 543.2 338.6C533.7 453.6 437.4 544 320 544C196.3 544 96 443.7 96 320C96 196.3 196.3 96 320 96C377.4 96 429.7 117.6 469.3 153C482.5 164.8 483.6 185 471.8 198.2C460 211.4 439.8 212.5 426.6 200.7C398.3 175.4 361 160 320 160z" />
+            </svg>
+            <!-- A svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M349.5 115.7C344.6 103.8 332.9 96 320 96C307.1 96 295.4 103.8 290.5 115.7C197.2 339.7 143.8 467.7 130.5 499.7C123.7 516 131.4 534.7 147.7 541.5C164 548.3 182.7 540.6 189.5 524.3L221.3 448L418.6 448L450.4 524.3C457.2 540.6 475.9 548.3 492.2 541.5C508.5 534.7 516.2 516 509.4 499.7C496.1 467.7 442.7 339.7 349.4 115.7zM392 384L248 384L320 211.2L392 384z" />
+            </svg>
+            <!-- M svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M118.7 97.4C132.2 93.3 146.8 98.5 154.6 110.3L320 358.3L485.4 110.3C493.2 98.6 507.8 93.3 521.3 97.4C534.8 101.5 544 113.9 544 128L544 512C544 529.7 529.7 544 512 544C494.3 544 480 529.7 480 512L480 233.7L346.6 433.8C340.7 442.7 330.7 448 320 448C309.3 448 299.3 442.7 293.4 433.8L160 233.7L160 512C160 529.7 145.7 544 128 544C110.3 544 96 529.7 96 512L96 128C96 113.9 105.2 101.5 118.7 97.4z" />
+            </svg>
+            <!-- E svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M192 96C174.3 96 160 110.3 160 128L160 512C160 529.7 174.3 544 192 544L448 544C465.7 544 480 529.7 480 512C480 494.3 465.7 480 448 480L224 480L224 352L384 352C401.7 352 416 337.7 416 320C416 302.3 401.7 288 384 288L224 288L224 160L448 160C465.7 160 480 145.7 480 128C480 110.3 465.7 96 448 96L192 96z" />
+            </svg>
+            <!-- S svg -->
+            <svg id="svg" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M160 221.5C160 152.2 216.2 96 285.5 96L432 96C449.7 96 464 110.3 464 128C464 145.7 449.7 160 432 160L285.5 160C251.5 160 224 187.5 224 221.5C224 252.5 247.1 278.7 277.9 282.5L370.1 294C432.9 301.9 480 355.2 480 418.5C480 487.8 423.8 544 354.5 544L208 544C190.3 544 176 529.7 176 512C176 494.3 190.3 480 208 480L354.5 480C388.5 480 416 452.5 416 418.5C416 387.5 392.9 361.3 362.1 357.5L269.9 346C207.1 338.1 160 284.8 160 221.5z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary px-5 fixed-top" style="z-index: 1;">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><img src="Images/PicnicGames-Logo.png" alt="Picnic Logo"
+                    height="80px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" href="games.html">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold fs-6" href="itinerary.html">Itinerary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="itinerary-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold">Picnic Itinerary Planner</h1>
+                    <p class="lead">Plan your perfect picnic with our pre-made itineraries</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Half Day Itinerary Modal -->
+    <div class="modal fade" id="halfDayModal" tabindex="-1" aria-labelledby="halfDayModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="halfDayModalLabel">Half Day Picnic Itinerary</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="Images/Half_day_picnic.jpg" class="card-img-top itinerary-image mb-3"
+                        alt="Half Day Picnic">
+                    <div class="card-body">
+                        <h3 class="h5 card-title mb-3">Half Day Picnic</h3>
+                        <p class="card-text">Perfect for a quick getaway with family or friends. Includes a mix
+                            of games and relaxation time.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-sign-in-alt text-primary me-2"></i><strong>10:00 AM:</strong> Arrive
+                                and
+                                set up picnic area</li>
+                            <li><i class="fas fa-users text-success me-2"></i><strong>10:30 AM:</strong> Icebreaker game
+                                (e.g. Charades)</li>
+                            <li><i class="fas fa-chess-board text-warning me-2"></i><strong>11:00 AM:</strong> Ludo or
+                                Indoor board game</li>
+                            <li><i class="fas fa-utensils text-danger me-2"></i><strong>12:00 PM:</strong> Lunch break
+                            </li>
+                            <li><i class="fas fa-chair text-info me-2"></i><strong>1:00 PM:</strong> Free time or
+                                relaxation
+                            </li>
+                            <li><i class="fas fa-map-marked-alt text-primary me-2"></i><strong>2:00 PM:</strong>
+                                Scavenger
+                                Hunt or Outdoor fun</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="PDFs/Half_Day_Itinerary.pdf" class="btn btn-primary" download>Download (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Day Itinerary Modal -->
+    <div class="modal fade" id="fullDayModal" tabindex="-1" aria-labelledby="fullDayModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fullDayModalLabel">Full Day Picnic Itinerary</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="Images/Full_day_picnic.jpg" class="card-img-top itinerary-image mb-3"
+                        alt="Full Day Picnic">
+                    <div class="card-body">
+                        <h3 class="h5 card-title mb-3">Full Day Picnic</h3>
+                        <p class="card-text">A complete day of fun with a variety of games, activities, and
+                            relaxation time.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-sign-in-alt text-primary me-2"></i><strong>9:00 AM:</strong> Arrive &
+                                welcome</li>
+                            <li><i class="fas fa-users text-success me-2"></i><strong>9:30 AM:</strong> Warm-up games
+                                (e.g.
+                                Simon Says)</li>
+                            <li><i class="fas fa-chess-board text-warning me-2"></i><strong>10:30 AM:</strong> Board
+                                games
+                                (Pictionary, Uno)</li>
+                            <li><i class="fas fa-utensils text-danger me-2"></i><strong>12:00 PM:</strong> Picnic lunch
+                            </li>
+                            <li><i class="fas fa-paint-brush text-info me-2"></i><strong>1:00 PM:</strong> Coloring
+                                contest
+                                or craft activity</li>
+                            <li><i class="fas fa-map-marked-alt text-primary me-2"></i><strong>2:00 PM:</strong> Outdoor
+                                obstacle race</li>
+                            <li><i class="fas fa-utensils text-warning me-2"></i><strong>4:00 PM:</strong> Snacks &
+                                hydration</li>
+                            <li><i class="fas fa-users text-success me-2"></i><strong>5:00 PM:</strong> Team challenge
+                                (e.g.
+                                Relay game)</li>
+                            <li><i class="fas fa-sign-out-alt text-danger me-2"></i><strong>6:00 PM:</strong> Pack-up
+                                and
+                                leave</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="PDFs/Full_Day_Itinerary.pdf" class="btn btn-primary" download>Download (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kids Birthday Party Itinerary Modal -->
+    <div class="modal fade" id="birthdayModal" tabindex="-1" aria-labelledby="birthdayModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="birthdayModalLabel">Kids Birthday Party Itinerary</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="Images/Kids_Birthday_Party.jpg" class="card-img-top itinerary-image mb-3"
+                        alt="Kids Party">
+                    <div class="card-body">
+                        <h3 class="h5 card-title mb-3">Kids Birthday Party</h3>
+                        <p class="card-text">A fun-filled party plan with games and activities perfect for
+                            children's birthdays.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-sign-in-alt text-primary me-2"></i><strong>11:00 AM:</strong> Guests
+                                arrive
+                                & welcome activity</li>
+                            <li><i class="fas fa-utensils text-warning me-2"></i><strong>11:30 AM:</strong> Light snacks
+                                &
+                                juices</li>
+                            <li><i class="fas fa-users text-success me-2"></i><strong>12:00 PM:</strong> Group game
+                                (Musical
+                                Chairs)</li>
+                            <li><i class="fas fa-birthday-cake text-danger me-2"></i><strong>1:00 PM:</strong> Cake
+                                cutting
+                                ceremony</li>
+                            <li><i class="fas fa-utensils text-info me-2"></i><strong>1:30 PM:</strong> Lunch (Picnic
+                                Style)
+                            </li>
+                            <li><i class="fas fa-gift text-warning me-2"></i><strong>2:30 PM:</strong> Gift distribution
+                                &
+                                photos</li>
+                            <li><i class="fas fa-chair text-secondary me-2"></i><strong>3:00 PM:</strong> Free time and
+                                relaxation</li>
+                            <li><i class="fas fa-sign-out-alt text-danger me-2"></i><strong>4:00 PM:</strong> Departure
+                                &
+                                goodbye gifts</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="PDFs/Kids_Birthday_Itinerary.pdf" class="btn btn-primary" download>Download (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Main Content -->
+    <main class="py-5">
+        <div class="container">
+            <!-- Itinerary Types -->
+            <section class="mb-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Choose Your Adventure</h2>
+                    <p class="text-muted">Select a pre-made itinerary based on your available time</p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Half Day Itinerary -->
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card itinerary-card h-100">
+                            <div class="position-relative">
+                                <img src="Images/Half_day_picnic.jpg" class="card-img-top itinerary-image"
+                                    alt="Half Day Picnic">
+                                <span class="badge bg-primary itinerary-badge">4-5 Hours</span>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="h5 card-title">Half Day Picnic</h3>
+                                <p class="card-text">Perfect for a quick getaway with family or friends. Includes a mix
+                                    of games and relaxation time.</p>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="far fa-clock text-primary me-2"></i> 4-5 hours total</li>
+                                    <li class="mb-2"><i class="fas fa-gamepad text-primary me-2"></i> 2-3 games</li>
+                                    <li class="mb-2"><i class="fas fa-utensils text-primary me-2"></i> Meal break
+                                        included</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100 mt-3" data-bs-toggle="modal"
+                                    data-bs-target="#halfDayModal">
+                                    View Itinerary
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Full Day Itinerary -->
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card itinerary-card h-100">
+                            <div class="position-relative">
+                                <img src="Images/Full_day_picnic.jpg" class="card-img-top itinerary-image"
+                                    alt="Full Day Picnic">
+                                <span class="badge bg-primary itinerary-badge">6-8 Hours</span>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="h5 card-title">Full Day Picnic</h3>
+                                <p class="card-text">A complete day of fun with a variety of games, activities, and
+                                    relaxation time.</p>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="far fa-clock text-primary me-2"></i> 6-8 hours total</li>
+                                    <li class="mb-2"><i class="fas fa-gamepad text-primary me-2"></i> 4-5 games</li>
+                                    <li class="mb-2"><i class="fas fa-utensils text-primary me-2"></i> Meal and snack
+                                        breaks</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100 mt-3 view-itinerary" data-bs-toggle="modal"
+                                    data-bs-target="#fullDayModal">
+                                    View Itinerary
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kids Party Itinerary -->
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card itinerary-card h-100">
+                            <div class="position-relative">
+                                <img src="Images/Kids_Birthday_Party.jpg" class="card-img-top itinerary-image"
+                                    alt="Kids Party">
+                                <span class="badge bg-primary itinerary-badge">3-4 Hours</span>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="h5 card-title">Kids Birthday Party</h3>
+                                <p class="card-text">A fun-filled party plan with games and activities perfect for
+                                    children's birthdays.</p>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="far fa-clock text-primary me-2"></i> 3-4 hours total</li>
+                                    <li class="mb-2"><i class="fas fa-gamepad text-primary me-2"></i> 3-4 kids' games
+                                    </li>
+                                    <li class="mb-2"><i class="fas fa-birthday-cake text-primary me-2"></i> Cake and
+                                        snack time</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100 mt-3 view-itinerary" data-bs-toggle="modal"
+                                    data-bs-target="#birthdayModal">
+                                    View Itinerary
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 style="color: white;">Picnic Games</h5>
+                    <p style="color: white;">Making family time more fun and memorable with our collection of engaging
+                        games and activities.</p>
+                    <div class="social-links mt-3">
+                        <a href="https://web.facebook.com/" class="text-decoration-none"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/" class="text-decoration-none"><i class="fab fa-x"></i></a>
+                        <a href="https://www.instagram.com/" class="text-decoration-none"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/" class="text-decoration-none"><i
+                                class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 mb-4 mb-lg-0">
+                    <h6 style="color: white;">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="games.html" class="text-white text-decoration-none">Games</a></li>
+                        <li class="mb-2"><a href="itinerary.html" class="text-white text-decoration-none">Itinerary</a>
+                        </li>
+                        <li class="mb-2"><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <h6 style="color: white;">Newsletter</h6>
+                    <p style="color: white;">Subscribe to get updates on new games and picnic ideas.</p>
+                    <form class="mb-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control bg-dark text-white border-secondary"
+                                placeholder="Your email">
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                    <p class="small mb-0" style="color: white;">We'll never share your email with anyone else.</p>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0" style="color: white;">&copy; 2025 Picnic Games. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        <a href="#" class="text-white text-decoration-none">Privacy Policy</a> |
+                        <a href="#" class="text-white text-decoration-none">Terms of Service</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"
+        integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize AOS
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize AOS (Animate On Scroll)
+            gsap.fromTo(
+                ".loading-page",
+                { opacity: 1 },
+                {
+                    opacity: 0,
+                    duration: 1.5,
+                    delay: 3.5,
+                    onComplete: () => {
+                        document.querySelector(".loading-page").style.display = "none"; // remove loader
+                        document.body.classList.remove("loading");
+                        document.body.classList.add("reveal");
+
+                        // re-init AOS after loader ends
+                        AOS.init({
+                            duration: 800,
+                            easing: 'ease-in-out',
+                            once: true,
+                            mirror: false
+                        });
+                    }
+                }
+            );
+        });
+    </script>
+</body>
+
+</html>
