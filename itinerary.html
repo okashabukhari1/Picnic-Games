@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picnic Itinerary - Picnic Games</title>
+    <link rel="icon" type="image/png" href="Images/PicnicGames-Logo.png">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Primary Colors - Blue Theme */
+            --primary: #1e88e5;
+            /* Primary blue */
+            --primary-light: #64b5f6;
+            /* Lighter shade for hover states */
+            --primary-dark: #1565c0;
+            /* Darker shade for active states */
+            --primary-bg-subtle: #e3f2fd;
+        }
+
+        .navbar {
+            padding: 0.8rem 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: var(--primary-dark);
+            transform: scale(1.02);
+        }
+
+        .navbar-brand img {
+            height: 80px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: rotate(-5deg);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--gray-700);
+            margin: 0 0.3rem;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            color: var(--primary);
+            background-color: var(--primary-bg-subtle);
+        }
+
+        .nav-link:hover::before,
+        .nav-link:focus::before {
+            width: 70%;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+            background-color: var(--primary-bg-subtle);
+        }
+
+        .nav-link.active::before {
+            width: 70%;
+            background: var(--primary);
+        }
+
+        .itinerary-hero {
+            background: linear-gradient(rgba(5, 167, 242, 0.7), rgb(60, 154, 241));
+            color: white;
+            padding: 120px 0 60px;
+            margin-top: -76px;
+            margin-bottom: 50px;
+        }
+
+        .itinerary-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .itinerary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .itinerary-image {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .itinerary-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            color: #333;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            #svg {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary px-5 fixed-top" style="z-index: 1;">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><img src="Images/PicnicGames-Logo.png" alt="Picnic Logo"
+                    height="80px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" href="games.html">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold fs-6" href="itinerary.html">Itinerary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="itinerary-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold">Picnic Itinerary Planner</h1>
+                    <p class="lead">Plan your perfect picnic with our pre-made itineraries</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Half Day Itinerary Modal -->
+    <div class="modal fade" id="halfDayModal" tabindex="-1" aria-labelledby="halfDayModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="halfDayModalLabel">Half Day Picnic Itinerary</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="Images/Half_day_picnic.jpg" class="card-img-top itinerary-image mb-3"
+                        alt="Half Day Picnic">
+                    <div class="card-body">
+                        <h3 class="h5 card-title mb-3">Half Day Picnic</h3>
+                        <p class="card-text">Perfect for a quick getaway with family or friends. Includes a mix
+                            of games and relaxation time.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-sign-in-alt text-primary me-2"></i><strong>10:00 AM:</strong> Arrive
+                                and
+                                set up picnic area</li>
+                            <li><i class="fas fa-users text-success me-2"></i><strong>10:30 AM:</strong> Icebreaker game
+                                (e.g. Charades)</li>
+                            <li><i class="fas fa-chess-board text-warning me-2"></i><strong>11:00 AM:</strong> Ludo or
+                                Indoor board game</li>
+                            <li><i class="fas fa-utensils text-danger me-2"></i><strong>12:00 PM:</strong> Lunch break
+                            </li>
+                            <li><i class="fas fa-chair text-info me-2"></i><strong>1:00 PM:</strong> Free time or
+                                relaxation
+                            </li>
+                            <li><i class="fas fa-map-marked-alt text-primary me-2"></i><strong>2:00 PM:</strong>
+                                Scavenger
+                                Hunt or Outdoor fun</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="PDFs/Half_Day_Itinerary.pdf" class="btn btn-primary" download>Download (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Day Itinerary Modal -->
+    <div class="modal fade" id="fullDayModal" tabindex="-1" aria-labelledby="fullDayModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fullDayModalLabel">Full Day Picnic Itinerary</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="Images/Full_day_picnic.jpg" class="card-img-top itinerary-image mb-3"
+                        alt="Full Day Picnic">
+                    <div class="card-body">
+                        <h3 class="h5 card-title mb-3">Full Day Picnic</h3>
+                        <p class="card-text">A complete day of fun with a variety of games, activities, and
+                            relaxation time.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-sign-in-alt text-primary me-2"></i><strong>9:00 AM:</strong> Arrive &
+                                welcome</li>
+                            <li><i class="fas fa-users text-success me-2"></i><strong>9:30 AM:</strong> Warm-up games
+                                (e.g.
+                                Simon Says)</li>
+                            <li><i class="fas fa-chess-board text-warning me-2"></i><strong>10:30 AM:</strong> Board
+                                games
+                                (Pictionary, Uno)</li>
+                            <li><i class="fas fa-utensils text-danger me-2"></i><strong>12:00 PM:</strong> Picnic lunch
+                            </li>
+                            <li><i class="fas fa-paint-brush text-info me-2"></i><strong>1:00 PM:</strong> Coloring
+                                contest
+                                or craft activity</li>
+                            <li><i class="fas fa-map-marked-alt text-primary me-2"></i><strong>2:00 PM:</strong> Outdoor
+                                obstacle race</li>
+                            <li><i class="fas fa-utensils text-warning me-2"></i><strong>4:00 PM:</strong> Snacks &
+                                hydration</li>
+                            <li><i class="fas fa-users text-success me-2"></i><strong>5:00 PM:</strong> Team challenge
+                                (e.g.
+                                Relay game)</li>
+                            <li><i class="fas fa-sign-out-alt text-danger me-2"></i><strong>6:00 PM:</strong> Pack-up
+                                and
+                                leave</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="PDFs/Full_Day_Itinerary.pdf" class="btn btn-primary" download>Download (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kids Birthday Party Itinerary Modal -->
+    <div class="modal fade" id="birthdayModal" tabindex="-1" aria-labelledby="birthdayModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="birthdayModalLabel">Kids Birthday Party Itinerary</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="Images/Kids_Birthday_Party.jpg" class="card-img-top itinerary-image mb-3"
+                        alt="Kids Party">
+                    <div class="card-body">
+                        <h3 class="h5 card-title mb-3">Kids Birthday Party</h3>
+                        <p class="card-text">A fun-filled party plan with games and activities perfect for
+                            children's birthdays.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-sign-in-alt text-primary me-2"></i><strong>11:00 AM:</strong> Guests
+                                arrive
+                                & welcome activity</li>
+                            <li><i class="fas fa-utensils text-warning me-2"></i><strong>11:30 AM:</strong> Light snacks
+                                &
+                                juices</li>
+                            <li><i class="fas fa-users text-success me-2"></i><strong>12:00 PM:</strong> Group game
+                                (Musical
+                                Chairs)</li>
+                            <li><i class="fas fa-birthday-cake text-danger me-2"></i><strong>1:00 PM:</strong> Cake
+                                cutting
+                                ceremony</li>
+                            <li><i class="fas fa-utensils text-info me-2"></i><strong>1:30 PM:</strong> Lunch (Picnic
+                                Style)
+                            </li>
+                            <li><i class="fas fa-gift text-warning me-2"></i><strong>2:30 PM:</strong> Gift distribution
+                                &
+                                photos</li>
+                            <li><i class="fas fa-chair text-secondary me-2"></i><strong>3:00 PM:</strong> Free time and
+                                relaxation</li>
+                            <li><i class="fas fa-sign-out-alt text-danger me-2"></i><strong>4:00 PM:</strong> Departure
+                                &
+                                goodbye gifts</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="PDFs/Kids_Birthday_Itinerary.pdf" class="btn btn-primary" download>Download (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Main Content -->
+    <main class="py-5">
+        <div class="container">
+            <!-- Itinerary Types -->
+            <section class="mb-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Choose Your Adventure</h2>
+                    <p class="text-muted">Select a pre-made itinerary based on your available time</p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Half Day Itinerary -->
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card itinerary-card h-100">
+                            <div class="position-relative">
+                                <img src="Images/Half_day_picnic.jpg" class="card-img-top itinerary-image"
+                                    alt="Half Day Picnic">
+                                <span class="badge bg-primary itinerary-badge">4-5 Hours</span>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="h5 card-title">Half Day Picnic</h3>
+                                <p class="card-text">Perfect for a quick getaway with family or friends. Includes a mix
+                                    of games and relaxation time.</p>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="far fa-clock text-primary me-2"></i> 4-5 hours total</li>
+                                    <li class="mb-2"><i class="fas fa-gamepad text-primary me-2"></i> 2-3 games</li>
+                                    <li class="mb-2"><i class="fas fa-utensils text-primary me-2"></i> Meal break
+                                        included</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100 mt-3" data-bs-toggle="modal"
+                                    data-bs-target="#halfDayModal">
+                                    View Itinerary
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Full Day Itinerary -->
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card itinerary-card h-100">
+                            <div class="position-relative">
+                                <img src="Images/Full_day_picnic.jpg" class="card-img-top itinerary-image"
+                                    alt="Full Day Picnic">
+                                <span class="badge bg-primary itinerary-badge">6-8 Hours</span>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="h5 card-title">Full Day Picnic</h3>
+                                <p class="card-text">A complete day of fun with a variety of games, activities, and
+                                    relaxation time.</p>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="far fa-clock text-primary me-2"></i> 6-8 hours total</li>
+                                    <li class="mb-2"><i class="fas fa-gamepad text-primary me-2"></i> 4-5 games</li>
+                                    <li class="mb-2"><i class="fas fa-utensils text-primary me-2"></i> Meal and snack
+                                        breaks</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100 mt-3 view-itinerary" data-bs-toggle="modal"
+                                    data-bs-target="#fullDayModal">
+                                    View Itinerary
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kids Party Itinerary -->
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card itinerary-card h-100">
+                            <div class="position-relative">
+                                <img src="Images/Kids_Birthday_Party.jpg" class="card-img-top itinerary-image"
+                                    alt="Kids Party">
+                                <span class="badge bg-primary itinerary-badge">3-4 Hours</span>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="h5 card-title">Kids Birthday Party</h3>
+                                <p class="card-text">A fun-filled party plan with games and activities perfect for
+                                    children's birthdays.</p>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="far fa-clock text-primary me-2"></i> 3-4 hours total</li>
+                                    <li class="mb-2"><i class="fas fa-gamepad text-primary me-2"></i> 3-4 kids' games
+                                    </li>
+                                    <li class="mb-2"><i class="fas fa-birthday-cake text-primary me-2"></i> Cake and
+                                        snack time</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100 mt-3 view-itinerary" data-bs-toggle="modal"
+                                    data-bs-target="#birthdayModal">
+                                    View Itinerary
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 style="color: white;">Picnic Games</h5>
+                    <p style="color: white;">Making family time more fun and memorable with our collection of engaging
+                        games and activities.</p>
+                    <div class="social-links mt-3">
+                        <a href="https://web.facebook.com/" class="text-decoration-none"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/" class="text-decoration-none"><i class="fab fa-x"></i></a>
+                        <a href="https://www.instagram.com/" class="text-decoration-none"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/" class="text-decoration-none"><i
+                                class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 mb-4 mb-lg-0">
+                    <h6 style="color: white;">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="games.html" class="text-white text-decoration-none">Games</a></li>
+                        <li class="mb-2"><a href="itinerary.html" class="text-white text-decoration-none">Itinerary</a>
+                        </li>
+                        <li class="mb-2"><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <h6 style="color: white;">Newsletter</h6>
+                    <p style="color: white;">Subscribe to get updates on new games and picnic ideas.</p>
+                    <form class="mb-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control bg-dark text-white border-secondary"
+                                placeholder="Your email">
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                    <p class="small mb-0" style="color: white;">We'll never share your email with anyone else.</p>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0" style="color: white;">&copy; 2025 Picnic Games. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        <a href="#" class="text-white text-decoration-none">Privacy Policy</a> |
+                        <a href="#" class="text-white text-decoration-none">Terms of Service</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize AOS
+        document.addEventListener('DOMContentLoaded', function () {
+            // re-init AOS after loader ends
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false
+            });
+        });
+    </script>
+</body>
+
+</html>

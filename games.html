@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Categories - Picnic Games</title>
+    <link rel="icon" type="image/png" href="Images/PicnicGames-Logo.png">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Main Color Variables */
+        :root {
+            /* Primary Colors - Blue Theme */
+            --primary: #1e88e5;
+            /* Primary blue */
+            --primary-light: #64b5f6;
+            /* Lighter shade for hover states */
+            --primary-dark: #1565c0;
+            /* Darker shade for active states */
+            --primary-bg-subtle: #e3f2fd;
+
+            /* Neutral Colors */
+            --light: #f5f5f5;
+            /* Light background */
+            --dark: #263238;
+            /* Dark text/background */
+            --gray-100: #f5f5f5;
+            /* Light gray */
+            --gray-200: #e0e0e0;
+            --gray-300: #bdbdbd;
+            --gray-400: #9e9e9e;
+            --gray-500: #757575;
+            --gray-600: #616161;
+            --gray-700: #424242;
+            --gray-800: #303030;
+            --gray-900: #212121;
+
+            /* Theme Specific Colors */
+            --outdoor: #2e7d32;
+            /* Green for outdoor activities */
+            --outdoor-light: #e8f5e9;
+            --indoor: #1e88e5;
+            /* Blue for indoor activities */
+            --indoor-light: #e3f2fd;
+            --family: #6f42c1;
+            /* Purple for family activities */
+            --family-light: #f0e6ff;
+            --kids: #fd7e14;
+            /* Orange for kids activities */
+            --kids-light: #fff3e6;
+            --couples: #d63384;
+            /* Pink for couples activities */
+            --couples-light: #ffe6f2;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary), #0a58ca);
+            --gradient-success: linear-gradient(135deg, var(--success), #157347);
+
+            /* Shadows */
+            --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+
+            /* Border Radius */
+            --border-radius: 0.375rem;
+            --border-radius-sm: 0.25rem;
+            --border-radius-lg: 0.5rem;
+            --border-radius-xl: 0.75rem;
+            --border-radius-xxl: 1rem;
+            --border-radius-pill: 50rem;
+
+            /* Spacing */
+            --spacer: 1rem;
+            --spacer-2: calc(var(--spacer) * 1.5);
+            --spacer-3: calc(var(--spacer) * 3);
+            --spacer-4: calc(var(--spacer) * 4);
+            --spacer-5: calc(var(--spacer) * 5);
+
+            /* Transitions */
+            --transition-base: all 0.2s ease-in-out;
+            --transition-fade: opacity 0.15s linear;
+            --transition-collapse: height 0.35s ease;
+
+            /* Z-index */
+            --zindex-dropdown: 1000;
+            --zindex-sticky: 1020;
+            --zindex-fixed: 1030;
+            --zindex-modal-backdrop: 1040;
+            --zindex-offcanvas: 1050;
+            --zindex-modal: 1060;
+            --zindex-popover: 1070;
+            --zindex-tooltip: 1080;
+        }
+
+        body {
+            color: var(--gray-900);
+            background-color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            padding: 0.8rem 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: var(--primary-dark);
+            transform: scale(1.02);
+        }
+
+        .navbar-brand img {
+            height: 80px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: rotate(-5deg);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--gray-700);
+            margin: 0 0.3rem;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            color: var(--primary);
+            background-color: var(--primary-bg-subtle);
+        }
+
+        .nav-link:hover::before,
+        .nav-link:focus::before {
+            width: 70%;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+            background-color: var(--primary-bg-subtle);
+        }
+
+        .nav-link.active::before {
+            width: 70%;
+            background: var(--primary);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(5, 167, 242, 0.7), rgb(60, 154, 241));
+        }
+
+        .category-tabs .nav-link {
+            color: var(--gray-700);
+            font-weight: 500;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            margin: 0 0.25rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            background-color: var(--gray-200);
+        }
+
+        .category-tabs .nav-link.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px rgba(13, 110, 253, 0.2);
+        }
+
+        .subcategory-buttons .btn {
+            margin: 0.25rem;
+            border-radius: 50px;
+            text-transform: capitalize;
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+        }
+
+        .subcategory-buttons .btn.active,
+        .subcategory-buttons .btn:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .game-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-image {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-base);
+            box-shadow: var(--shadow);
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            color: #333;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary px-5 fixed-top" style="z-index: 10;">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><img src="Images/PicnicGames-Logo.png" alt="Picnic Logo"
+                    height="80px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold fs-6" href="games.html">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" href="itinerary.html">Itinerary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold fs-6" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="bg-primary text-white py-5 hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-4 pb-4 pt-3 fw-bold">Game Categories</h1>
+                    <p class="lead">Browse our collection of fun games for all ages and occasions</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-5">
+        <div class="container">
+            <!-- Category Tabs -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <ul class="nav nav-pills mb-4 justify-content-center category-tabs" id="categoryTabs"
+                        role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="indoor-tab" data-bs-toggle="pill"
+                                data-bs-target="#indoor" type="button" role="tab" data-category="indoor">
+                                <i class="fas fa-home me-2"></i>Indoor Games
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="outdoor-tab" data-bs-toggle="pill" data-bs-target="#outdoor"
+                                type="button" role="tab" data-category="outdoor">
+                                <i class="fas fa-sun me-2"></i>Outdoor Games
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Subcategory Buttons -->
+                    <div class="text-center mb-5">
+                        <div class="btn-group subcategory-buttons" role="group" aria-label="Game subcategories">
+                            <button type="button" class="btn btn-outline-primary active" data-subcategory="all">All
+                                Games</button>
+                            <button type="button" class="btn btn-outline-primary" data-subcategory="kids">For
+                                Kids</button>
+                            <button type="button" class="btn btn-outline-primary" data-subcategory="family">Family
+                                Games</button>
+                            <button type="button" class="btn btn-outline-primary" data-subcategory="males">For
+                                Males</button>
+                            <button type="button" class="btn btn-outline-primary" data-subcategory="females">For
+                                Females</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Grid -->
+            <div class="row" id="gamesGrid">
+                <!-- Games will be loaded here by JavaScript -->
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading games...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Game Detail Modal -->
+    <div class="modal fade" id="gameDetailModal" tabindex="-1" aria-labelledby="gameDetailModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="gameDetailModalLabel">Game Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="gameDetailContent">
+                    <!-- Game details will be loaded here by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="#" class="btn btn-primary" id="viewFullDetailsBtn">View Full Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 style="color: white;">Picnic Games</h5>
+                    <p style="color: white;">Making family time more fun and memorable with our collection of engaging
+                        games and activities.</p>
+                    <div class="social-links mt-3">
+                        <a href="https://web.facebook.com/" class="text-decoration-none"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/" class="text-decoration-none"><i class="fab fa-x"></i></a>
+                        <a href="https://www.instagram.com/" class="text-decoration-none"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/" class="text-decoration-none"><i
+                                class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 mb-4 mb-lg-0">
+                    <h6 style="color: white;">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="games.html" class="text-white text-decoration-none">Games</a></li>
+                        <li class="mb-2"><a href="itinerary.html" class="text-white text-decoration-none">Itinerary</a>
+                        </li>
+                        <li class="mb-2"><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <h6 style="color: white;">Newsletter</h6>
+                    <p style="color: white;">Subscribe to get updates on new games and picnic ideas.</p>
+                    <form class="mb-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control bg-dark text-white border-secondary"
+                                placeholder="Your email">
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                    <p class="small mb-0" style="color: white;">We'll never share your email with anyone else.</p>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0" style="color: white;">&copy; 2025 Picnic Games. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        <a href="#" class="text-white text-decoration-none">Privacy Policy</a> |
+                        <a href="#" class="text-white text-decoration-none">Terms of Service</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top text-decoration-none" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom JS -->
+    <script>
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('active');
+            } else {
+                backToTopButton.classList.remove('active');
+            }
+        });
+
+        backToTopButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Games data (in a real app, this would come from an API)
+        window.games = [
+            // Indoor Games
+
+            //    Family Games Section
+            {
+                id: 1,
+                title: 'Ludo',
+                description: 'The goal is to race all your pawns around the board and get them safely into the center home before your opponents do.',
+                image: 'Images/ludo.jpeg',
+                category: 'indoor',
+                subcategory: 'family',
+                materials: ['Ludo Board', 'Dice', '16 pawns (4 for each player)'],
+                time: '20-30 mins',
+                instructions: [
+                    'Each player gets 4 pawns of one color.',
+                    'Roll a 6 to bring a pawn out of home',
+                    'Move tokens forward by the number on the dice. Choose any of your tokens.',
+                    'Land on an opponent to send their token back home (except in safe zones)',
+                    'Get all 4 tokens to the center to win!'
+                ]
+            },
+            {
+                id: 2,
+                title: 'Memory Game',
+                description: 'Place cards or objects face down and take turns flipping to find matching pairs—sharpens focus.',
+                image: 'Images/memorygame.jpg',
+                category: 'indoor',
+                subcategory: 'family',
+                materials: ['Set of Matching Cards', 'Flat Playing Surface', 'Timer'],
+                time: '10-15 mins',
+                instructions: [
+                    'Shuffle and lay all cards face down in rows',
+                    'On your turn, flip 2 cards',
+                    'If they match, keep them and go again',
+                    'The game ends when all cards are matched.',
+                    'The player with the most pairs wins!'
+                ]
+            },
+            {
+                id: 3,
+                title: "Shadow Puppets",
+                description: "A quiet game using hand shadows to tell stories or form shapes.",
+                image: "Images/shadowpuppet.jpg",
+                category: "indoor",
+                subcategory: "family",
+                materials: ["Flashlight", "Blank wall"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Turn off the lights and shine a flashlight toward a wall.",
+                    "Use your hands to create shadow shapes.",
+                    "Take turns telling a short story using shadows."
+                ]
+            },
+
+            {
+                id: 4,
+                title: 'Jenga',
+                description: 'A game of physical skill where players take turns removing blocks from a tower and balancing them on top.',
+                image: 'Images/jenga.webp',
+                category: 'indoor',
+                subcategory: 'family',
+                materials: ['Jenga set or wooden blocks'],
+                time: '15-30 mins',
+                instructions: [
+                    'Build a tower with blocks (3 blocks per level, alternating direction)',
+                    'Players take turns removing one block from below the highest completed story',
+                    'Place the block on top of the tower',
+                    'The player who causes the tower to collapse loses',
+                    'Use only one hand at a time'
+                ]
+            },
+            {
+                id: 5,
+                title: 'Monopoly',
+                description: "Buy properties, charge rent, and bankrupt your opponents in this business-themed game.",
+                image: "Images/monopoly.jpg",
+                category: "indoor",
+                subcategory: "family",
+                materials: ["Monopoly board", "Dice", "Tokens", "Money", "Property cards"],
+                time: "60–180 mins",
+                instructions: [
+                    "Roll dice to move around the board.",
+                    "Buy properties and collect rent from others.",
+                    "Build houses and hotels to increase rent.",
+                    "Avoid bankruptcy to stay in the game.",
+                    "Last player remaining with money wins."
+                ]
+            },
+            {
+                id: 6,
+                title: 'UNO',
+                description: "A fast-paced card game where players match colors or numbers to discard all cards first.",
+                image: "Images/uno.webp",
+                category: "indoor",
+                subcategory: "family",
+                materials: ["UNO card deck"],
+                time: "20–30 mins",
+                instructions: [
+                    "Match cards by color or number on your turn.",
+                    "Use action cards to skip, reverse, or change color.",
+                    "Say 'UNO' when you have one card left!",
+                    "First to discard all cards wins."
+                ]
+            },
+            {
+                id: 7,
+                title: 'Carrom',
+                description: "Players flick the striker to pocket all their assigned coins and win points. Pocket the queen with strategy!",
+                image: "Images/carrom.jpg",
+                category: "indoor",
+                subcategory: "family",
+                materials: ["Carrom board", "Striker", "Carrom coins"],
+                time: "20–40 mins",
+                instructions: [
+                    "Each player tries to pocket their colored coins using the striker.",
+                    "Pocket the red coin (queen) only after pocketing one of your own.",
+                    "Turn continues until a player fails to pocket a coin.",
+                    "Most points at the end wins."
+                ]
+            },
+            {
+                id: 8,
+                title: 'Rubik Race',
+                description: "A fast-paced tile-sliding game where players race to match a color pattern grid.",
+                image: "Images/rubikrace.jpeg",
+                category: "indoor",
+                subcategory: "family",
+                materials: ["Rubik's Race game board", "Pattern scrambler"],
+                time: "5–10 minutes",
+                instructions: [
+                    "Shake the scrambler to create a random 3×3 color pattern.",
+                    "Both players slide tiles on their board to match the pattern in the center grid.",
+                    "First player to complete the pattern and close their frame wins!"
+                ]
+            },
+            {
+                id: 9,
+                title: "Laundry Basket Skee-Ball",
+                description: "A rolling game using laundry baskets and balls to score points.",
+                image: "Images/laundryskeeball.jpg",
+                category: "indoor",
+                subcategory: "family",
+                materials: ["Laundry baskets", "Soft balls"],
+                time: "10–20 minutes",
+                instructions: [
+                    "Line up 3 laundry baskets at increasing distances.",
+                    "Label them with point values (e.g., 10, 20, 30).",
+                    "Players roll balls into the baskets to score.",
+                    "Most points after all turns wins!"
+                ]
+            },
+            {
+                id: 10,
+                title: "Pictionary",
+                description: "A drawing game where others try to guess what you're sketching.",
+                image: "Images/pictionary.jpg",
+                category: "indoor",
+                subcategory: "family",
+                materials: ["Whiteboard or paper", "Markers"],
+                time: "15–30 minutes",
+                instructions: [
+                    "Pick a word or phrase to draw.",
+                    "Set a 1-minute timer.",
+                    "No speaking or writing letters!",
+                    "Teammates guess before time runs out."
+                ]
+            },
+            {
+                id: 11,
+                title: "Balloon Keep-Up",
+                description: "Don’t let the balloon touch the floor!",
+                image: "Images/balloonkeepup.jpg",
+                category: "indoor",
+                subcategory: "family",
+                materials: ["Balloon"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Tap the balloon to keep it in the air.",
+                    "No one can hold it — only quick taps!",
+                    "Count how long you keep it up."
+                ]
+            },
+            {
+                id: 12,
+                title: "Indoor Bowling",
+                description: "Knock down plastic bottles with a ball.",
+                image: "Images/indoorbowling.webp",
+                category: "indoor",
+                subcategory: "family",
+                materials: ["Plastic bottles", "Small ball"],
+                time: "10–20 minutes",
+                instructions: [
+                    "Line up 10 bottles like bowling pins.",
+                    "Roll a soft ball to knock them down.",
+                    "Score like regular bowling (strikes/spares).",
+                    "Play 3–5 rounds."
+                ]
+            },
+            // Kids Game Section
+            {
+                id: 13,
+                title: 'Musical Chairs',
+                description: 'A classic party game where players walk around chairs while music plays and race to sit when it stops.',
+                image: 'Images/musicalchairs.jpg',
+                category: 'indoor',
+                subcategory: 'kids',
+                materials: ['Chairs', 'Music player'],
+                time: '15-30 mins',
+                instructions: [
+                    'Arrange chairs in a circle (one fewer than players)',
+                    'Play music while players walk around',
+                    'Stop music randomly',
+                    'Players race to sit on a chair',
+                    'Player left standing is out, remove one chair and repeat'
+                ]
+            },
+            {
+                id: 14,
+                title: 'Dots and Boxes',
+                description: 'A pencil game where players connect dots to complete boxes.',
+                image: 'Images/dotsandboxes.webp',
+                category: 'indoor',
+                subcategory: 'kids',
+                materials: ['Paper with dot grid', 'Pen or Pencil'],
+                time: '10–20 minutes',
+                instructions: [
+                    'Players take turns drawing lines between dots. Completing a box gives you a point and another turn. Player with most boxes wins.'
+                ]
+            },
+            {
+                id: 15,
+                title: "Rock, Paper, Scissors",
+                description: "A quick game of chance where players choose hand gestures to beat the other.",
+                image: "Images/rockpaperscissors.jpg",
+                category: "indoor",
+                subcategory: "kids",
+                materials: ["None needed"],
+                time: "1–2 mins",
+                instructions: [
+                    "Players count to three and show either rock, paper, or scissors.",
+                    "Rock beats scissors, scissors beats paper, paper beats rock.",
+                    "First to win best-of-3 or 5 rounds wins the game."
+                ]
+            },
+            {
+                id: 16,
+                title: 'Tic-Tac-Toe',
+                description: "A fast and simple game where two players try to line up Xs or Os on a grid.",
+                image: "Images/tictactoe.jpg",
+                category: "indoor",
+                subcategory: "kids",
+                materials: ["Paper", "Pen/Pencil"],
+                time: "1–2 mins per game",
+                instructions: [
+                    "Draw a 3×3 grid on paper.",
+                    "One player uses X, the other uses O.",
+                    "Take turns marking the boxes.",
+                    "First to line up 3 marks horizontally, vertically, or diagonally wins."
+                ]
+            },
+            {
+                id: 17,
+                title: "Hot Potato",
+                description: "Pass an object quickly while music plays. Don't be holding it when the music stops!",
+                image: "Images/hotpotato.jpg",
+                category: "indoor",
+                subcategory: "kids",
+                materials: ["Soft ball or object", "Music source"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Sit in a circle and start music.",
+                    "Pass the object around quickly.",
+                    "Stop the music randomly—whoever holds it is out.",
+                    "Last player remaining wins."
+                ]
+            },
+            {
+                id: 18,
+                title: "Cup Stacking",
+                description: "A speed game where players build and unstack cup pyramids as fast as they can.",
+                image: "Images/cupstacking.jpg",
+                category: "indoor",
+                subcategory: "kids",
+                materials: ["Plastic cups"],
+                time: "5–10 minutes",
+                instructions: [
+                    "Each player gets 6–12 cups.",
+                    "Stack them into pyramids and unstack quickly.",
+                    "Use a timer or race head-to-head.",
+                    "Fastest stacker wins the round!"
+                ]
+            },
+            {
+                id: 19,
+                title: "Paper Plane Contest",
+                description: "Design and fold paper airplanes, then compete to see which flies farthest or best.",
+                image: "Images/paperplane.jpeg",
+                category: "indoor",
+                subcategory: "kids",
+                materials: ["Paper", "Markers (optional)"],
+                time: "10–20 minutes",
+                instructions: [
+                    "Each player folds a paper airplane.",
+                    "You can decorate or improve designs.",
+                    "Fly them across a clear room or hall.",
+                    "Award points for distance, accuracy, and style!"
+                ]
+            },
+            {
+                id: 20,
+                title: "Simon Says",
+                description: "Follow commands only when they begin with 'Simon says'—get tricked and you're out!",
+                image: "Images/Simon_Says.jpg",
+                category: "indoor",
+                subcategory: "kids",
+                materials: ["None"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Choose one player to be 'Simon'.",
+                    "Simon gives instructions like 'Simon says touch your nose.'",
+                    "Players must follow only the commands that start with 'Simon says'.",
+                    "If someone follows a command without 'Simon says', they’re out.",
+                    "Last player remaining becomes the next Simon."
+                ]
+            },
+            {
+                id: 21,
+                title: "The Floor is Lava",
+                description: "Pretend the floor is lava and stay on furniture or cushions to survive!",
+                image: "Images/floorislava.webp",
+                category: "indoor",
+                subcategory: "kids",
+                materials: ["Pillows, chairs, mats"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Someone shouts 'The floor is lava!'",
+                    "Everyone must jump to a safe surface quickly.",
+                    "Anyone who touches the floor is out.",
+                    "Keep playing until one person remains."
+                ]
+            },
+            {
+                id: 22,
+                title: "What's Missing?",
+                description: "Observe objects, then one is hidden — guess what's missing.",
+                image: "Images/whatsmissing.webp",
+                category: "indoor",
+                subcategory: "kids",
+                materials: ["Random small objects", "Cloth to cover"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Place 5–10 objects on a tray.",
+                    "Let players observe for 30 seconds.",
+                    "Cover, remove 1–2 objects, uncover.",
+                    "Guess what's missing!"
+                ]
+            },
+            {
+                id: 23,
+                title: "Room Treasure Hunt",
+                description: "Hide objects around a room and create clues to find them.",
+                image: "Images/roomtreasurehunt.webp",
+                category: "indoor",
+                subcategory: "kids",
+                materials: ["Small objects", "Paper clues"],
+                time: "15–30 minutes",
+                instructions: [
+                    "Hide 5–10 objects around the room.",
+                    "Write simple clues or riddles leading to each one.",
+                    "Give the first clue to start.",
+                    "Find all to complete the hunt!"
+                ]
+            },
+            {
+                id: 24,
+                title: "Balloon Volleyball",
+                description: "Play volleyball indoors using a balloon instead of a ball.",
+                image: "Images/balloonvolleyball.jpg",
+                category: "indoor",
+                subcategory: "kids",
+                materials: ["Balloon", "Tape or string (for net)"],
+                time: "15–30 minutes",
+                instructions: [
+                    "Create a 'net' using tape or string across the room.",
+                    "Use a balloon as the ball.",
+                    "Try to hit the balloon over the net without letting it touch the ground.",
+                    "First to 10 points wins!"
+                ]
+            },
+            // Male Games Section
+            {
+                id: 25,
+                title: "Punching Accuracy Pad",
+                description: "Test punching aim on targets like paper pads or soft bags.",
+                image: "Images/punchingaccuracypad.webp",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["Punch pad", "Marker", "Score chart"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Mark small circles or zones on the pad.",
+                    "Players punch while blindfolded or in motion.",
+                    "Track hits and misses.",
+                    "Most accurate striker wins."
+                ]
+            },
+            {
+                id: 26,
+                title: "Mini Air Hockey",
+                description: "Tabletop version of air hockey using fingers or pucks.",
+                image: "images/miniairhockey.jpg",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["Mini air hockey set or DIY board", "Coins or pucks"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Slide pucks across the table aiming for the goal.",
+                    "Use fingers or mini paddles to defend and attack.",
+                    "Score up to 5 points to win the match."
+                ]
+            },
+            {
+                id: 27,
+                title: "Tug of Resistance Bands",
+                description: "Strength challenge using resistance bands indoors.",
+                image: "Images/TugofResistanceBands.jpg",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["Resistance band", "Open floor area"],
+                time: "5–10 minutes",
+                instructions: [
+                    "Two players hold ends of the band.",
+                    "Pull backward to bring opponent forward.",
+                    "Winner holds their ground for 3 seconds.",
+                    "Use mats for safety."
+                ]
+            },
+            {
+                id: 28,
+                title: "Push-Up Contest",
+                description: "Who can do the most push-ups in 1 minute?",
+                image: "Images/pushupcontest.jpg",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["None", "Timer"],
+                time: "5–10 minutes",
+                instructions: [
+                    "Set a timer for 60 seconds.",
+                    "Each player does as many push-ups as possible.",
+                    "Highest number wins."
+                ]
+            },
+            {
+                id: 29,
+                title: "Risk",
+                description: "A global domination strategy game of conquest.",
+                image: "Images/risk.jpg",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["Risk board", "Army tokens", "Dice", "Cards"],
+                time: "1–2 hours",
+                instructions: ["Players control armies and battle for territory. Use dice to resolve conflicts. Player who conquers all territories wins."]
+            },
+            {
+                id: 30,
+                title: "Chess",
+                description: "A classic strategic board game of logic and foresight.",
+                image: "Images/chess.jpeg",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["Chessboard", "32 Chess pieces (16 per player)"],
+                time: "10–60 mins",
+                instructions: [
+                    "Set up the board with pieces in their starting positions.",
+                    "Each piece moves in a unique way (e.g., bishop diagonally, knight in L-shape).",
+                    "Take turns moving one piece at a time.",
+                    "Capture the opponent's pieces to gain advantage.",
+                    "Put the opponent's king in checkmate to win the game."
+                ]
+            },
+
+            {
+                id: 31,
+                title: "Arm Wrestling Tournament",
+                description: "Classic strength contest played in elimination format or best of three.",
+                image: "Images/armwrestling.jpg",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["Flat surface", "Timer (optional)", "Bracket chart"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Pair up players and start matches.",
+                    "Use fair arm wrestling position—elbows fixed and go on signal.",
+                    "Elimination or league-style can be used.",
+                    "Winner is the undefeated champ."
+                ]
+            },
+            {
+                id: 32,
+                title: "Thumb War Championship",
+                description: "Play multiple thumb wrestling matches to crown a champion.",
+                image: "Images/thumbwar.jpg",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["None"],
+                time: "5–10 minutes",
+                instructions: [
+                    "Two players clasp hands and start thumb wrestling.",
+                    "First to pin the other's thumb for 3 seconds wins.",
+                    "Organize a mini tournament.",
+                    "Best-of-3 rounds for fairness."
+                ]
+            },
+            {
+                id: 33,
+                title: "Mini Darts Challenge",
+                description: "Use a soft dartboard set for accuracy-based scoring indoors.",
+                image: "Images/minidart.jpg",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["Mini dartboard", "Soft-tip darts"],
+                time: "10–20 minutes",
+                instructions: [
+                    "Hang or set up the dartboard safely on a wall.",
+                    "Take turns throwing 3 darts each round.",
+                    "Use scoring zones like traditional darts.",
+                    "Highest total after set rounds wins."
+                ]
+            },
+            {
+                id: 34,
+                title: "Mini Basketball Shootout",
+                description: "Compete to score the most shots into a mini hoop.",
+                image: "Images/minibasketball.avif",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["Mini basketball", "Over-the-door hoop or laundry basket"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Players take turns shooting from a set distance.",
+                    "Keep score per round.",
+                    "Add challenges like time limits or trick shots."
+                ]
+            },
+            {
+                id: 35,
+                title: "Foosball Showdown",
+                description: "A table soccer game requiring reflexes and control.",
+                image: "Images/foosballshowdown.webp",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["Foosball table", "Ball"],
+                time: "10–30 minutes",
+                instructions: [
+                    "Each player controls rods with mini players.",
+                    "Spin or slide to hit the ball into the opponent's goal.",
+                    "First to score 5 or 10 goals wins."
+                ]
+            },
+            {
+                id: 36,
+                title: "Ping Pong Trick Shots",
+                description: "A creative challenge to bounce ping pong balls into cups with style.",
+                image: "Images/pingpong.webp",
+                category: "indoor",
+                subcategory: "males",
+                materials: ["Ping pong balls", "Cups", "Tables"],
+                time: "15–25 minutes",
+                instructions: [
+                    "Set cups at different angles and distances.",
+                    "Attempt creative bounce shots into the cups.",
+                    "Each cup hit scores points based on difficulty.",
+                    "Play in turns or freestyle trick battles."
+                ]
+            },
+            // Female Games Section
+            {
+                id: 37,
+                title: "Bracelet Making",
+                description: "A relaxing and creative game where players make friendship bracelets using beads or threads.",
+                image: "Images/braceletmaking.jpg",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Colored threads or beads", "Scissors", "Tape or clips"],
+                time: "20–40 minutes",
+                instructions: [
+                    "Choose your colors and cut equal lengths of thread.",
+                    "Secure one end with tape and begin braiding or weaving.",
+                    "Add beads as you go for decoration.",
+                    "Tie off the end and wear or gift your bracelet!"
+                ]
+            },
+            {
+                id: 38,
+                title: "Makeup Challenge",
+                description: "Try out different makeup looks with friends or challenge yourself to copy a style!",
+                image: "Images/makeupchallenge.webp",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Makeup kit", "Mirror", "Timer (optional)"],
+                time: "15–30 minutes",
+                instructions: [
+                    "Pick a theme: glam, natural, funky, etc.",
+                    "Set a timer for fun (like 10 minutes).",
+                    "Each player does their look and reveals at the end.",
+                    "Vote for the most creative or stylish result!"
+                ]
+            },
+            {
+                id: 39,
+                title: "Room Makeover Game",
+                description: "Rearrange or decorate your room using your sense of style and creativity.",
+                image: "Images/roommakeover.webp",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Decor items", "Posters", "Lights", "Craft supplies"],
+                time: "30–60 minutes",
+                instructions: [
+                    "Choose an area or shelf in your room to redecorate.",
+                    "Gather items like fairy lights, posters, cushions, or crafts.",
+                    "Arrange or DIY new décor based on a theme.",
+                    "Show off your before-and-after look!"
+                ]
+            },
+            {
+                id: 40,
+                title: "Photo Pose Game",
+                description: "Spin a wheel or draw a card to strike silly or stylish poses for the camera.",
+                image: "Images/photopose.webp",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Phone camera", "Pose prompts"],
+                time: "10–20 minutes",
+                instructions: [
+                    "Create cards or a spinner with pose ideas.",
+                    "Each player gets a turn to pose and be photographed.",
+                    "Group votes for best photo!",
+                    "Make a mini gallery or slideshow."
+                ]
+            },
+            {
+                id: 41,
+                title: "Jewelry Designing",
+                description: "Create earrings, necklaces, or anklets using colorful beads and strings.",
+                image: "Images/jewellerydesigning.jpg",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Beads", "Threads/Wire", "Clasps", "Pliers"],
+                time: "30–60 minutes",
+                instructions: [
+                    "Select beads and colors for your design.",
+                    "Thread them carefully in the desired pattern.",
+                    "Use pliers to attach clasps or loops.",
+                    "Show off your unique jewelry!"
+                ]
+            },
+            {
+                id: 42,
+                title: "Guess the Scent",
+                description: "Test your sense of smell by identifying different scented items while blindfolded.",
+                image: "Images/guessthescent.jpg",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Jars or bowls", "Various scents (spices, lotions, perfumes)", "Blindfold"],
+                time: "10–20 minutes",
+                instructions: [
+                    "Prepare containers with strong scents like cinnamon, coffee, or lavender.",
+                    "Blindfold the player and let them smell each item.",
+                    "Guess what each scent is.",
+                    "Keep score and crown the scent queen!"
+                ]
+            },
+            {
+                id: 43,
+                title: "Gossip Jar",
+                description: "Share funny, fake, or real 'gossip' in a jar and guess who wrote what.",
+                image: "Images/gossipjar.jpg",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Small slips of paper", "Pen", "Jar"],
+                time: "15–20 minutes",
+                instructions: [
+                    "Each player writes a gossip or fun fact on a slip.",
+                    "Fold and drop it into the jar anonymously.",
+                    "Take turns pulling one and guessing who wrote it.",
+                    "Laugh, blush, and share more stories!"
+                ]
+            },
+            {
+                id: 44,
+                title: "Fashion Sketching",
+                description: "Draw your dream outfit or design clothes like a fashion designer.",
+                image: "Images/fashionsketching.jpg",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Sketchbook", "Pencils", "Color pens or markers"],
+                time: "15–25 minutes",
+                instructions: [
+                    "Draw a basic model outline or use stencils.",
+                    "Design outfits with your imagination – add patterns, colors, and accessories.",
+                    "Share designs with friends or create a mini collection.",
+                    "Optional: Cut out paper models and dress them!"
+                ]
+            },
+            {
+                id: 45,
+                title: "Makeup Memory",
+                description: "Place makeup items under a cloth, show for 10 seconds, and test who remembers the most!",
+                image: "Images/makeupmemory.webp",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Makeup products", "Cloth", "Timer"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Arrange 10–15 beauty items on a tray.",
+                    "Let players view them for 10 seconds.",
+                    "Cover the tray and write down as many as remembered.",
+                    "Highest number remembered wins!"
+                ]
+            },
+            {
+                id: 46,
+                title: "Bag Raid",
+                description: "Guess the items in each other's handbags without peeking!",
+                image: "Images/bagraid.jpg",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Handbags", "Paper", "Pen"],
+                time: "10–20 minutes",
+                instructions: [
+                    "Pass a handbag to another player.",
+                    "They write 5 guesses about what's inside.",
+                    "Reveal and compare guesses.",
+                    "Most correct guesses wins!"
+                ]
+            },
+            {
+                id: 47,
+                title: "Nail Art Station",
+                description: "Set up a mini nail salon where players paint and decorate each other's nails with creative designs.",
+                image: "Images/nailartstation.jpg",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Nail polish", "Cotton balls", "Nail stickers", "Nail file"],
+                time: "30–60 minutes",
+                instructions: [
+                    "Set up nail colors and tools on a table.",
+                    "Each player selects a design or theme.",
+                    "Take turns painting and decorating nails.",
+                    "Share the results or vote for the most creative!"
+                ]
+            },
+            {
+                id: 48,
+                title: "Fashion Show",
+                description: "Put together stylish outfits from available clothes and strut your stuff on a pretend runway.",
+                image: "Images/fashionshow.jpg",
+                category: "indoor",
+                subcategory: "females",
+                materials: ["Clothes", "Accessories", "Music", "Mirror"],
+                time: "30–45 minutes",
+                instructions: [
+                    "Pick a theme (retro, modern, glam, etc.).",
+                    "Each player chooses outfits and accessories.",
+                    "Play music and walk the 'runway'.",
+                    "Take photos or have someone act as the judge!"
+                ]
+            },
+            // Outdoor Games
+
+            // Family Games Section
+
+            {
+                id: 49,
+                title: "Tug of War",
+                description: "A classic strength-based game where two teams pull on opposite ends of a rope to bring the other team across a line.",
+                image: "Images/tugofwar.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Strong rope", "Marker line"],
+                time: "15-20 minutes",
+                instructions: ["Divide players into two teams. Place a marker line on the ground. Each team pulls the rope, trying to drag the other team across the marker."]
+            },
+            {
+                id: 50,
+                title: "Water Balloon Toss",
+                description: "Pairs toss water balloons back and forth, stepping further apart after each throw. The last pair with an unbroken balloon wins.",
+                image: "Images/waterballoontoss.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Water balloons"],
+                time: "15-20 minutes",
+                instructions: ["Players form pairs and toss water balloons. After each round, they step back. Continue until only one pair has an unbroken balloon."]
+            },
+            {
+                id: 51,
+                title: "Treasure Hunt",
+                description: "A fun outdoor search game where players follow clues to find hidden treasures.",
+                image: "Images/Treasure-Hunt.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Clue cards", "Small treasures or prizes"],
+                time: "30-45 minutes",
+                instructions: ["Hide clues around the yard or park. Players solve each clue to find the next location. The first to find the treasure wins."]
+            },
+            {
+                id: 52,
+                title: "Relay Races",
+                description: "Teams race in segments, passing a baton or object.",
+                image: "Images/relayrace.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Baton or stick", "Markers"],
+                time: "10–20 minutes",
+                instructions: [
+                    "Divide into teams and set up lanes.",
+                    "Each player runs to the marker and back, handing off the baton.",
+                    "Fastest team wins."
+                ]
+            },
+            {
+                id: 53,
+                title: "Obstacle Course",
+                description: "A fun and active challenge where players race through various obstacles.",
+                image: "Images/obstaclecourse.webp",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Cones", "Ropes", "Chairs", "Hula hoops"],
+                time: "30-40 minutes",
+                instructions: ["Set up a course using household items. Players must jump, crawl, and climb through it. Fastest time wins."]
+            },
+            {
+                id: 54,
+                title: "Egg and Spoon Race",
+                description: "Balance an egg on a spoon and race to the finish line without dropping it!",
+                image: "Images/eggandspoonrace.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Spoons", "Eggs (real or plastic)"],
+                time: "10-15 minutes",
+                instructions: ["Each player balances an egg on a spoon and races to the finish. Dropping the egg means starting over!"]
+            },
+            {
+                id: 55,
+                title: "Scavenger Hunt",
+                description: "Players search for items on a checklist around a park or backyard. Great for family teamwork.",
+                image: "Images/scavengerhunt.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Checklist", "Bags or containers"],
+                time: "30-45 minutes",
+                instructions: ["Give each team a list of items to find. Set boundaries for the search area. The first team to find all items wins."]
+            },
+            {
+                id: 56,
+                title: "Capture the Flag",
+                description: "Teams try to capture the opposing team's flag and return it to their base without being tagged.",
+                image: "Images/capturetheflag.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["2 flags", "Boundary markers"],
+                time: "30-40 minutes",
+                instructions: ["Divide players into two teams. Each team hides its flag. Players try to capture the opposing team's flag and bring it home."]
+            },
+            {
+                id: 57,
+                title: "Lawn Bowling",
+                description: "Players roll balls toward a target ball. The closest ball wins. A calm and skill-based outdoor activity.",
+                image: "Images/lawnbowling.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Lawn bowling set"],
+                time: "20-30 minutes",
+                instructions: ["Take turns rolling balls toward a smaller target ball. The player with the closest ball wins the round."]
+            },
+            {
+                id: 58,
+                title: "Shadow Tag",
+                description: "Tag by stepping on each other’s shadow! A clever twist on the classic tag game.",
+                image: "Images/shadowtag.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Sunny area"],
+                time: "15-20 minutes",
+                instructions: ["One player is 'it' and tries to tag others by stepping on their shadow. If tagged, the shadow becomes the next 'it'."]
+            },
+            {
+                id: 59,
+                title: "Mini Golf",
+                description: "Set up a miniature golf course in your backyard using household items. Great for precision and patience.",
+                image: "Images/minigolf.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Golf balls", "Clubs or sticks", "Obstacles"],
+                time: "30-45 minutes",
+                instructions: ["Create obstacles and holes using cups, boxes, and ramps. Players take turns trying to complete each hole in the fewest strokes."]
+            },
+            {
+                id: 60,
+                title: "Target Toss",
+                description: "Throw balls at targets with points assigned. Add challenges for more excitement!",
+                image: "Images/targettoss.jpg",
+                category: "outdoor",
+                subcategory: "family",
+                materials: ["Targets", "Balls or bean bags"],
+                time: "15-20 minutes",
+                instructions: ["Set up multiple targets at different distances. Each target has a point value. Players take turns tossing and tally scores."]
+            },
+            // Kids Games Section
+            {
+                id: 61,
+                title: "Red Light, Green Light",
+                description: "Players must move toward a finish line only when 'green light' is called and freeze on 'red light'.",
+                image: "Images/redlightgreenlight.jpg",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["None"],
+                time: "15-20 minutes",
+                instructions: ["One child is the caller and stands at one end. Others start at the opposite end. Move on 'green light', freeze on 'red light'. If caught moving, go back."]
+            },
+            {
+                id: 62,
+                title: "Bubble Popping",
+                description: "Chase and pop floating bubbles in the yard. Great for toddlers and young children.",
+                image: "Images/bubblepopping.webp",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["Bubble solution", "Wands or bubble machine"],
+                time: "10-15 minutes",
+                instructions: ["Blow bubbles or use a bubble machine. Children chase and pop them. Add rules for different types of pops or competitions."]
+            },
+            {
+                id: 63,
+                title: "Hide and Seek",
+                description: "One child counts while others hide. The seeker then looks for all the hidden players.",
+                image: "Images/hideandseek.jpg",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["Safe outdoor space"],
+                time: "15-30 minutes",
+                instructions: ["One player counts to a chosen number with eyes closed. Others hide. The seeker finds them one by one. First found becomes the next seeker."]
+            },
+            {
+                id: 64,
+                title: "Tag",
+                description: "A simple chasing game where the 'it' player tags others to make them 'it'.",
+                image: "Images/tag.jpg",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["None"],
+                time: "10-20 minutes",
+                instructions: ["One player is 'it' and tries to tag others. Whoever is tagged becomes 'it'. The game continues until all players have been 'it' at least once."]
+            },
+            {
+                id: 65,
+                title: "Balloon Relay",
+                description: "Race while balancing balloons or running with them between legs.",
+                image: "Images/balloonrelay.webp",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["Balloons"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Form teams and line up.",
+                    "Each player races with a balloon (under chin, between knees, etc.).",
+                    "Tag next teammate for a relay."
+                ]
+            },
+            {
+                id: 66,
+                title: "Treasure Dig",
+                description: "Bury small toys or coins in a sandbox or soil and let kids dig them out like archaeologists.",
+                image: "Images/treasuredig.jpg",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["Sandbox", "Plastic toys or coins", "Shovels"],
+                time: "15-20 minutes",
+                instructions: ["Hide toys or coins in a sandbox. Give kids plastic tools to dig and search. The one who finds the most wins."]
+            },
+            {
+                id: 67,
+                title: "Hula Hoop Contest",
+                description: "A fun challenge to see who can keep a hula hoop spinning the longest.",
+                image: "Images/hulahoop.jpg",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["Hula hoops"],
+                time: "10–15 minutes",
+                instructions: [
+                    "Give each player a hula hoop.",
+                    "On the signal, all players start spinning their hoops around their waists.",
+                    "Anyone who drops their hoop is out.",
+                    "Last one spinning wins!",
+                    "Optional: try other body parts (arms, legs) for extra fun."
+                ]
+            },
+            {
+                id: 68,
+                title: "Balloon Feet Stomp",
+                description: "Kids tie balloons to their ankles and try to pop others’ balloons while protecting their own.",
+                image: "Images/balloonfeetstomp.jpg",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["Balloons", "String"],
+                time: "10-15 minutes",
+                instructions: ["Tie a balloon to each child's ankle. Players try to stomp on others' balloons while keeping theirs intact. The last with a balloon wins."]
+            },
+            {
+                id: 69,
+                title: "Toy Car Races",
+                description: "Kids race their toy cars down ramps or driveways to see which goes farthest or fastest.",
+                image: "Images/toycarrace.webp",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["Toy cars", "Cardboard ramps or smooth tracks"],
+                time: "10-15 minutes",
+                instructions: ["Set up a track or ramp. Kids release their cars at the same time and watch them roll. Mark the winner based on distance or speed."]
+            },
+            {
+                id: 70,
+                title: "Toy Wash Station",
+                description: "Set up a mini washing station where kids clean their outdoor toys with soapy water and sponges.",
+                image: "Images/toywashstation.webp",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["Tubs", "Water", "Soap", "Sponges", "Toys"],
+                time: "15-20 minutes",
+                instructions: ["Fill tubs with soapy water and place outdoor toys nearby. Kids use sponges and brushes to clean and rinse the toys."]
+            },
+            {
+                id: 71,
+                title: "Dino Egg Hunt",
+                description: "Plastic eggs or toys are hidden outdoors for kids to find like a dinosaur egg hunt.",
+                image: "Images/dinoegghunt.jpg",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["Plastic eggs", "Small toys", "Markers"],
+                time: "15-25 minutes",
+                instructions: ["Hide plastic eggs filled with small toys. Kids look for 'dino eggs' and collect them in baskets or buckets."]
+            },
+            {
+                id: 72,
+                title: "Musical Freeze Statues",
+                description: "Kids dance to music and freeze when the music stops, holding funny poses.",
+                image: "Images/musicalfreeze.webp",
+                category: "outdoor",
+                subcategory: "kids",
+                materials: ["Speaker or phone with music"],
+                time: "10-15 minutes",
+                instructions: ["Play music and let kids dance. When the music stops, they freeze in place. Anyone who moves is out."]
+            },
+            // Male Games Section
+            {
+                id: 73,
+                title: "Paintball Skirmish",
+                description: "Teams compete in strategic shooting games using paintball guns in a controlled outdoor arena.",
+                image: "Images/paintball.jpg",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Paintball guns", "Masks", "Protective gear", "Paintballs"],
+                time: "30-60 minutes",
+                instructions: ["Teams hide, aim, and eliminate each other by hitting opponents with paintballs while completing objectives."]
+            },
+            {
+                id: 74,
+                title: "Mountain Biking Sprint",
+                description: "A biking challenge where participants race over rugged trails and terrain.",
+                image: "Images/mountainbiking.jpg",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Mountain bikes", "Helmets", "Marked trail"],
+                time: "20-40 minutes",
+                instructions: ["Set a trail or loop. Riders compete to complete the course in the shortest time."]
+            },
+            {
+                id: 75,
+                title: "Canoe Relay",
+                description: "A team paddling competition in a river or lake.",
+                image: "Images/canoerelay.jpg",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Canoes", "Paddles", "Life jackets"],
+                time: "20-30 minutes",
+                instructions: ["Teams take turns paddling a set distance and passing the canoe to the next player. Fastest team wins."]
+            },
+            {
+                id: 76,
+                title: "Cricket",
+                description: "A bat-and-ball team sport played between two teams where players score runs by hitting a ball and running between wickets.",
+                image: "Images/cricket.jpg",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Bat", "Ball", "Wickets", "Protective gear"],
+                time: "30-90 minutes",
+                instructions: ["Form two teams. One team bats to score runs while the other bowls and fields. Switch roles after an innings."]
+            },
+            {
+                id: 77,
+                title: "Football (Soccer)",
+                description: "A team sport where players aim to score goals by kicking a ball into the opposing net.",
+                image: "Images/football.webp",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Football", "Goal posts"],
+                time: "30-60 minutes",
+                instructions: ["Divide into teams. Play with standard or shortened rules. Team with most goals at the end wins."]
+            },
+            {
+                id: 78,
+                title: "Volleyball",
+                description: "A fast-paced game where teams hit a ball over a net aiming to land it in the opponent’s court.",
+                image: "Images/volleyball.jpg",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Volleyball", "Net", "Court"],
+                time: "20-40 minutes",
+                instructions: ["Teams take turns serving and volleying the ball. A point is scored when the opposing team fails to return the ball properly."]
+            },
+            {
+                id: 79,
+                title: "Sprint Race",
+                description: "A short-distance running race to test speed.",
+                image: "Images/sprintrace.jpg",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Track", "Start/finish markers"],
+                time: "5-10 minutes",
+                instructions: ["Mark a track. On signal, runners sprint to the finish line. Fastest wins."]
+            },
+            {
+                id: 80,
+                title: "Wrestling Match",
+                description: "A physical sport where players try to pin their opponents to the ground using strength and technique.",
+                image: "Images/wrestling.webp",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Mat or grass area"],
+                time: "5-15 minutes",
+                instructions: ["Players wrestle within a circle. Match ends by pin or point system. Ensure safety rules are followed."]
+            },
+            {
+                id: 81,
+                title: "Archery Target Shoot",
+                description: "A game of skill where players aim to hit a target with arrows from a distance.",
+                image: "Images/archerytargetshoot.webp",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Bow", "Arrows", "Target board"],
+                time: "15-30 minutes",
+                instructions: ["Players take turns shooting arrows at a target. Points awarded based on accuracy."]
+            },
+            {
+                id: 82,
+                title: "Rugby",
+                description: "A contact sport involving running with the ball and scoring by touching it down in the opponent's zone.",
+                image: "Images/rugby.jpg",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Rugby ball", "Goal zones"],
+                time: "30-60 minutes",
+                instructions: ["Teams pass the ball backwards and run forward to score. Tackles are allowed. Most points win."]
+            },
+            {
+                id: 83,
+                title: "Dodgeball",
+                description: "Players try to eliminate opponents by hitting them with soft balls while avoiding being hit themselves.",
+                image: "Images/dodgeball.jpg",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Soft balls"],
+                time: "10-20 minutes",
+                instructions: ["Players dodge, throw, and catch balls. Last player or team remaining wins."]
+            },
+            {
+                id: 84,
+                title: "Boxing Practice",
+                description: "A strength and coordination sport where two opponents spar with padded gloves.",
+                image: "Images/boxingpractice.jpg",
+                category: "outdoor",
+                subcategory: "males",
+                materials: ["Boxing gloves", "Protective gear", "Ring"],
+                time: "10-30 minutes",
+                instructions: ["Spar with a partner under safety rules. Judges or timekeeper manage rounds."]
+            },
+            // Female Games Section
+            {
+                id: 85,
+                title: "Scarf Tag",
+                description: "Players wear a scarf as a tail and try to steal each other's scarf without losing theirs.",
+                image: "Images/scarftag.jpg",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["Scarves or fabric strips"],
+                time: "10-15 minutes",
+                instructions: ["Each player tucks a scarf into their waistband. Try to steal others’ scarves while protecting yours."]
+            },
+            {
+                id: 86,
+                title: "Flower Hunt",
+                description: "A scavenger-style game where players search for specific flowers or colors.",
+                image: "Images/flowerhunt.avif",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["List of flowers or colors", "Basket"],
+                time: "15-30 minutes",
+                instructions: ["Give players a list. They collect or photograph the flowers. First to complete or get the most wins."]
+            },
+            {
+                id: 87,
+                title: "Nature Art",
+                description: "Use natural materials like leaves, twigs, and petals to create art pieces outdoors.",
+                image: "Images/natureart.jpg",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["Leaves", "Stones", "Flowers", "Paper (optional)"],
+                time: "20–30 minutes",
+                instructions: ["Collect nature items and arrange them into artistic designs. Optionally photograph or transfer to paper afterward."]
+            },
+            {
+                id: 88,
+                title: "Petal Relay",
+                description: "A floral-themed relay race where each player collects petals to complete a team flower.",
+                image: "Images/petalrelay.webp",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["Paper petals", "Flower bases"],
+                time: "15–20 minutes",
+                instructions: ["catter paper petals across the play area. Each player runs to collect and attach one petal at a time to their team's flower base."]
+            },
+            {
+                id: 89,
+                title: "Dance Freeze Outdoors",
+                description: "Dance to music outdoors and freeze when the music stops. Anyone who moves is out!",
+                image: "Images/dancefreeze.jpg",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["Speaker", "Music"],
+                time: "10–15 minutes",
+                instructions: ["Play music and let everyone dance. Pause the music at random—anyone caught moving is eliminated. Last dancer wins."]
+            },
+            {
+                id: 90,
+                title: "Ribbon Trail Maze",
+                description: "Follow color-coded ribbons through a trail to reach the end before others.",
+                image: "Images/ribbontrail.jpeg",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["Colored ribbons", "Markers"],
+                time: "20–25 minutes",
+                instructions: ["Set up a zig-zagging ribbon trail. Players must follow only their color to the end. First to finish wins."]
+            },
+            {
+                id: 91,
+                title: "Nature Fashion Parade",
+                description: "Create accessories using natural materials and show them off in a walk.",
+                image: "Images/naturefashionparade.jpg",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["Leaves", "Flowers", "Twigs", "Tape"],
+                time: "20–25 minutes",
+                instructions: ["Players create accessories using natural items, then parade their designs for fun or judging."]
+            },
+            {
+                id: 92,
+                title: "Outdoor Karaoke",
+                description: "Sing favorite songs outdoors with a speaker or karaoke app.",
+                image: "Images/outdoorkaraoke.jpg",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["Speaker", "Phone or karaoke app"],
+                time: "20–30 minutes",
+                instructions: ["Each player chooses a song and performs outdoors. Optional: Add judging for fun competition."]
+            },
+            {
+                id: 93,
+                title: "Mirror Me",
+                description: "One player leads with slow movements while the partner mimics them exactly.",
+                image: "Images/mirrorme.jpg",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["None"],
+                time: "10–15 minutes",
+                instructions: ["Pair up. One player performs slow movements and the other mirrors them. Switch roles after a few rounds."]
+            },
+            {
+                id: 94,
+                title: "Tea Party Picnic",
+                description: "Pretend tea party with dolls and friends in an outdoor setting.",
+                image: "Images/teapartypicnic.jpg",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["Blanket", "Play tea set", "Toys or dolls"],
+                time: "15–30 minutes",
+                instructions: ["Set up a picnic with dolls. Take turns being host or guest. Enjoy imaginary tea!"]
+            },
+            {
+                id: 95,
+                title: "Flower Crown Craft",
+                description: "Make wearable flower crowns with fresh or fake flowers outdoors.",
+                image: "Images/flowercrowncraft.jpg",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["Flowers", "String or wire"],
+                time: "20–30 minutes",
+                instructions: ["Gather flowers and wrap them into a crown. Wear proudly or gift to a friend."]
+            },
+            {
+                id: 96,
+                title: "Butterfly Catch",
+                description: "Players race to catch paper or fabric butterflies blown in the wind.",
+                image: "Images/butterflycatch.jpg",
+                category: "outdoor",
+                subcategory: "females",
+                materials: ["Paper butterflies", "Nets or baskets"],
+                time: "10–20 minutes",
+                instructions: [
+                    "Toss paper butterflies into the air.",
+                    "Players catch as many as they can before time runs out.",
+                    "Count the butterflies to declare a winner."
+                ]
+            },
+
+
+        ];
+
+        // Filter variables
+        let currentCategory = 'indoor';
+        let currentSubcategory = 'all';
+
+        // DOM Elements
+        const gamesGrid = document.getElementById('gamesGrid');
+        const categoryTabs = document.querySelectorAll('#categoryTabs .nav-link');
+        const subcategoryButtons = document.querySelectorAll('.subcategory-buttons .btn');
+        const gameDetailModal = new bootstrap.Modal(document.getElementById('gameDetailModal'));
+        const gameDetailContent = document.getElementById('gameDetailContent');
+        const viewFullDetailsBtn = document.getElementById('viewFullDetailsBtn');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function () {
+            // re-init AOS after loader ends
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false
+            });
+
+            // Load games for the initial category
+            filterGames();
+
+            // Add event listeners to category tabs
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    // Update active tab
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Update current category and filter games
+                    currentCategory = this.dataset.category;
+                    filterGames();
+                });
+            });
+
+            // Add event listeners to subcategory buttons
+            subcategoryButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Update active button
+                    subcategoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Update current subcategory and filter games
+                    currentSubcategory = this.dataset.subcategory;
+                    filterGames();
+                });
+            });
+        });
+
+        // Filter games based on selected category and subcategory
+        function filterGames() {
+            // Show loading state
+            gamesGrid.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading games...</p>
+                </div>
+            `;
+
+            // Simulate API delay
+            setTimeout(() => {
+                const filteredGames = games.filter(game => {
+                    const matchesCategory = game.category === currentCategory;
+                    const matchesSubcategory = currentSubcategory === 'all' || game.subcategory === currentSubcategory;
+                    return matchesCategory && matchesSubcategory;
+                });
+
+                displayGames(filteredGames);
+            }, 500);
+        }
+
+        // Display games in the grid
+        function displayGames(games) {
+            if (games.length === 0) {
+                gamesGrid.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-gamepad fa-3x text-muted mb-3"></i>
+                        <h4>No games found</h4>
+                        <p class="text-muted">Try selecting a different category or subcategory</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+
+            games.forEach(game => {
+                html += `
+                    <div class="col-md-4 mb-4" data-aos="fade-up">
+                        <div class="card game-card h-100">
+                            <img src="${game.image}" class="card-img-top game-image" alt="${game.title}" onerror="this.src='https://placehold.co/800x600/d3d3d3/808080?text=Game+Image'">
+                            <div class="card-body">
+                                <h5 class="card-title">${game.title}</h5>
+                                <p class="card-text text-truncate">${game.description}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary">${game.time}</span>
+                                    <button class="btn btn-sm btn-outline-primary view-details py-2 px-3" data-game-id="${game.id}">
+                                        View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            gamesGrid.innerHTML = html;
+
+            // Add event listeners to view details buttons
+            document.querySelectorAll('.view-details').forEach(button => {
+                button.addEventListener('click', function () {
+                    const gameId = parseInt(this.dataset.gameId);
+                    const game = window.games.find(g => g.id === gameId);  // ✅ use full list
+
+
+                    if (game) {
+                        showGameDetails(game);
+                    }
+                });
+            });
+        }
+
+        // Show game details in modal
+        function showGameDetails(game) {
+            // Update modal title
+            document.getElementById('gameDetailModalLabel').textContent = game.title;
+
+            // Update view full details button
+            viewFullDetailsBtn.href = `game-detail.html?game_id=${game.id}`;
+
+            // Create game details HTML
+            let html = `
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <img src="${game.image}" class="img-fluid rounded" alt="${game.title}" onerror="this.src='https://placehold.co/800x600/d3d3d3/808080?text=Game+Image'">
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Description</h5>
+                        <p>${game.description}</p>
+                        
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <h6>Time Required</h6>
+                                <p><i class="far fa-clock me-2"></i>${game.time}</p>
+                            </div>
+                            <div class="col-6">
+                                <h6>Category</h6>
+                                <p><i class="fas fa-${game.category === 'indoor' ? 'home' : 'sun'} me-2"></i>${game.category.charAt(0).toUpperCase() + game.category.slice(1)
+                }</p>
+                            </div>
+                        </div>
+                        
+                        <h6 class="mt-3">Materials Needed</h6>
+                        <ul class="list-unstyled">
+                            ${game.materials.map(material => `<li><i class="fas fa-check-circle text-success me-2"></i>${material}</li>`).join('')}
+                        </ul>
+                        
+                        <h6 class="mt-3">Quick Instructions</h6>
+                        <ol>
+                            ${game.instructions.slice(0, 3).map(step => `<li>${step}</li>`).join('')}
+                        </ol>
+                    </div>
+                </div>
+            `;
+
+            gameDetailContent.innerHTML = html;
+
+            // Show the modal
+            gameDetailModal.show();
+        }
+    </script>
+</body>
+
+</html>
